@@ -27,7 +27,9 @@ activate.bat
 > de seguridad del sistema no permite la ejecución de scripts.
 > De suceder, se debe ejecutar el siguiente comando en una 
 > ventana de PowerShell con privilegios administrativos:
+> 
 > ```Set-ExecutionPolicy RemoteSigned -Scope CurrentUser```
+> 
 > Es común que solicite una confirmación, de ser así, se debe ingresar 
 la letra `S` y presionar `Enter`.
 > Esto además resolverá el problema si se presenta en el terminal
@@ -63,6 +65,7 @@ Ya tenemos todo lo que necesitamos para comenzar a utilizar Django, solamente fa
 
 Si abrimos el archivo `BlogInfoBase\settings.py`, veremos que Django está esperando el poder conectarse a una base de datos de MySql llamada `Final_Info_Testing`.
 Por lo tanto, debemos crear una base de datos con el mismo nombre.
+
 En MySql WorkBench, ejecutamos el siguiente comando:
 
 ```sh
@@ -75,7 +78,10 @@ al pushear cambios al repositorio.
 
 ## _Migración de datos_
 Al cambiar de base de datos, Django nos pide aplicar las migraciones de datos desde cero.
-Ya podemos comenzar a utilizar Visual Studio Code para facilitar la experiencia, a partir de este momento, todos los comandos van a ser corridos en el terminal de Visual Studio Code.
+
+Ya podemos comenzar a utilizar Visual Studio Code para facilitar la experiencia.
+
+(A partir de este momento, todos los comandos van a ser corridos en el terminal de Visual Studio Code.)
 
 Abrimos Visual Studio Code y navegamos hasta la carpeta `Scripts` del entorno virtual.
 Una vez en ese directorio, ejecutamos el siguiente comando en el terminal de Visual Studio Code:
@@ -122,6 +128,7 @@ Lo único que resta hacer para confirmar que todo funcione correctamente, es eje
 python .\manage.py runserver
 ```
 Este comando abre el servidor en la dirección `127.0.0.1:8000/`.
+
 Si nos vamos a esa dirección en nuestro navegador, deberíamos ver la página por defecto de Django, con la leyenda:
 `The install worked successfully! Congratulations!`
 
