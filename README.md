@@ -12,15 +12,17 @@ Para asegurar la compatibilidad y autosuficiencia del código, es necesario crea
 
 Una vez que tengamos creado un directorio de trabajo, se debe abrir una ventana del Símbolo del Sistema con privilegios de administrador y ejecutar el siguiente comando.
 ```sh
-python -m venv .
+python -m venv env
 ```
-Esto nos creará un entorno virtual utilizando [venv], en el mismo directorio donde se ejecuta el comando.
+Esto nos creará un entorno virtual utilizando [venv], y lo guardará en una carpeta llamada `env`
 
 Una vez creado el entorno virtual, se lo debe iniciar con los siguientes comandos:
 
 ```sh
-cd Scripts
+cd env\Scripts
 activate.bat
+cd..
+cd..
 ```
 
 > Nota: Es posible que este paso de un error si la política 
@@ -38,8 +40,7 @@ de Visual Studio Code.
 Ahora, el entorno virtual está instalado y activado. No cierren este terminal, ya que nos servirá más adelante.
 
 # Clonar el repositorio e instalar dependencias
-
-Dentro de la carpeta `Scripts`, se debe crear una nueva carpeta donde se clonará el código.
+En el directorio de trabajo, se debe crear una carpeta nueva.
 El nombre de esta carpeta no importa y puede ser arbitrario, ya que solo sirve como un contenedor para ordenar mejor las cosas.
 
 Una vez creada, se debe ingresar a la misma y ejecutar los siguientes comandos:
