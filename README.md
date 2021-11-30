@@ -52,7 +52,7 @@ git fetch origin
 git checkout main
 ```
 
-Una vez clonado el código, se deben instalar las dependencias descriptas en el archivo `requeriments.txt`, ejecutando el siguiente comando en el terminal del Símbolo del Sistema que dejamos abierto:
+Una vez clonado el código, se deben instalar las dependencias descriptas en el archivo `requeriments.txt`, ejecutando el siguiente comando en el terminal del Símbolo del Sistema que dejamos abierto, (debe estar posicionado en el directorio donde clonamos el código):
 
 ```sh
 pip install -r requeriments.txt
