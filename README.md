@@ -43,7 +43,7 @@ Ahora, el entorno virtual está instalado y activado. No cierren este terminal, 
 En el directorio de trabajo, se debe crear una carpeta nueva.
 El nombre de esta carpeta no importa y puede ser arbitrario, ya que solo sirve como un contenedor para ordenar mejor las cosas.
 
-Una vez creada, se debe ingresar a la misma y ejecutar los siguientes comandos:
+Una vez creada, se debe ingresar a la misma y ejecutar los siguientes comandos en un terminal GIT:
 
 ```sh
 git init
