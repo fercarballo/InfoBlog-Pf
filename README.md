@@ -10,7 +10,7 @@ Este repositorio contiene una instalación limpia de Django, es por esto que se 
 
 Para asegurar la compatibilidad y autosuficiencia del código, es necesario crear un entorno virtual.
 
-Una vez que tengamos creado un directorio de trabajo, se debe abrir una ventana del Símbolo del Sistema con privilegios de administrador y ejecutar el siguiente comando.
+Una vez que tengamos creado un directorio de trabajo, se debe abrir una ventana del Símbolo del Sistema con privilegios de administrador en ese directorio y ejecutar el siguiente comando.
 ```sh
 python -m venv env
 ```
