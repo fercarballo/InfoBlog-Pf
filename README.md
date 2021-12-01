@@ -70,7 +70,7 @@ Por lo tanto, debemos crear una base de datos con el mismo nombre.
 En MySql WorkBench, ejecutamos el siguiente comando:
 
 ```sh
-CREATE SCHEMA Final_Info_Testing;
+CREATE SCHEMA 'Final_Info_Testing';
 ```
 
 > Nota: El nombre de esta base de datos también es arbitrario, pero 
