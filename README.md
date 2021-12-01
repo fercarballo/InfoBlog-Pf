@@ -10,7 +10,7 @@ Este repositorio contiene una instalación limpia de Django, es por esto que se 
 
 Para asegurar la compatibilidad y autosuficiencia del código, es necesario crear un entorno virtual.
 
-Una vez que tengamos creado un directorio de trabajo, se debe abrir una ventana del Símbolo del Sistema con privilegios de administrador y ejecutar el siguiente comando.
+Una vez que tengamos creado un directorio de trabajo, se debe abrir una ventana del Símbolo del Sistema con privilegios de administrador en ese directorio y ejecutar el siguiente comando.
 ```sh
 python -m venv env
 ```
@@ -43,7 +43,7 @@ Ahora, el entorno virtual está instalado y activado. No cierren este terminal, 
 En el directorio de trabajo, se debe crear una carpeta nueva.
 El nombre de esta carpeta no importa y puede ser arbitrario, ya que solo sirve como un contenedor para ordenar mejor las cosas.
 
-Una vez creada, se debe ingresar a la misma y ejecutar los siguientes comandos:
+Una vez creada, se debe ingresar a la misma y ejecutar los siguientes comandos en un terminal GIT:
 
 ```sh
 git init
@@ -70,7 +70,7 @@ Por lo tanto, debemos crear una base de datos con el mismo nombre.
 En MySql WorkBench, ejecutamos el siguiente comando:
 
 ```sh
-CREATE SCHEMA Final_Info_Testing;
+CREATE SCHEMA 'Final_Info_Testing';
 ```
 
 > Nota: El nombre de esta base de datos también es arbitrario, pero 
@@ -83,6 +83,10 @@ Al cambiar de base de datos, Django nos pide aplicar las migraciones de datos de
 Ya podemos comenzar a utilizar Visual Studio Code para facilitar la experiencia.
 
 (A partir de este momento, todos los comandos van a ser corridos en el terminal de Visual Studio Code.)
+
+Al abrir Visual Studio Code, se recomienda utilizar CMD en vez de PowerShell en el terminal integrado, ya que CMD activa automáticamente el entorno virtual.
+
+Si el entorno virtual no está activado, seguimos estos pasos: (Si ya está activado, podemos saltarlo)
 
 Abrimos Visual Studio Code y navegamos hasta la carpeta `Scripts` del entorno virtual.
 Una vez en ese directorio, ejecutamos el siguiente comando en el terminal de Visual Studio Code:
@@ -108,7 +112,7 @@ python .\manage.py createsuperuser
 
 Esto nos dará un pequeño programa interactivo que nos pedirá ingresar un usuario, un correo electrónico y una contraseña.
 
-Si precionamos enter sin haber ingresado nada cuando nos pide un usuario, el usuario se convierte en el nombre de usuario del sistema. De lo contrario, podemos ingresar el usuario que queramos, el cual se recomienda que sea sencillo, ya que se va a estar usando constantemente y escribir un usuario complicado cada vez que se necesite entrar al panel de administración se vuelve muy tedioso, muy rápido.
+Si presionamos enter sin haber ingresado nada cuando nos pide un usuario, el usuario se convierte en el nombre de usuario del sistema. De lo contrario, podemos ingresar el usuario que queramos, el cual se recomienda que sea sencillo, ya que se va a estar usando constantemente y escribir un usuario complicado cada vez que se necesite entrar al panel de administración se vuelve muy tedioso, muy rápido.
 
 Luego, nos pide un correo, el cual puede estar en blanco, ya que no se usa para acceder al panel administrativo.
 
