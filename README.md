@@ -84,6 +84,10 @@ Ya podemos comenzar a utilizar Visual Studio Code para facilitar la experiencia.
 
 (A partir de este momento, todos los comandos van a ser corridos en el terminal de Visual Studio Code.)
 
+Al abrir Visual Studio Code, se recomienda utilizar CMD en vez de PowerShell en el terminal integrado, ya que CMD activa automáticamente el entorno virtual.
+
+Si el entorno virtual no está activado, seguimos estos pasos: (Si ya está activado, podemos saltarlo)
+
 Abrimos Visual Studio Code y navegamos hasta la carpeta `Scripts` del entorno virtual.
 Una vez en ese directorio, ejecutamos el siguiente comando en el terminal de Visual Studio Code:
 ```sh
