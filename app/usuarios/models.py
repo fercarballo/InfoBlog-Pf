@@ -1,17 +1,17 @@
 from django.db import models
-from django import forms
+from django.utils import timezone
+
 
 # Create your models here.
-class Usuarios(forms.models.Model):
-    id = models.AutoField(primary_key=True)
+class Usuarios(models.Model):   
     nombre = models.CharField('Nombre', max_length=100, null=False, blank=False)
     apellido = models.CharField('Apellido', max_length=100, null=False, blank=False)
+    fecha_registro = models.DateTimeField(default=timezone.now)
     correo = models.EmailField('Correo electrónico', null=False, blank=False)
-    contraseña = forms.CharField(widget=forms.PasswordInput)
+    contrasena = models.CharField(max_length=50)
 
     class Meta:
-            model = Usuarios
-            widgets = {
-            'password': forms.PasswordInput(),
-        }
-            ordering = ('id__date_joined', )
+        ordering = ("fecha_registro",)
+    
+    def __str__(self) -> str:
+        return self.id
