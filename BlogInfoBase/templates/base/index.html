@@ -1,0 +1,14 @@
+{% extends "base/base.html" %}
+
+{%block contenido%}
+
+    {%for post in posts%}
+        <h1>{{post.titulo}}</h1>
+    {%endfor%}
+
+{%endblock%}
+
+<!--
+    Este archivo simplemente itera sobre todos los posts que hay en la base de datos y muestra los títulos de cada uno
+    Es solo para probar que funcione
+-->
