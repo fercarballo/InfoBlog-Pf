@@ -47,5 +47,29 @@ Este sistema funciona de la siguiente manera:
 
 - Cambiada `src` de tag `img` en línea 12 a `{{post.img.url}}`
 
+---
+
+## Vesión (0.2.0) (04/11/21)
+
+En esta versión se cambia la base de datos a SQLite para facilitar la transferencia de información entre el grupo. Esto se revertirá en la versión final.
+
+### Cambios
+
+### BlogInfoBase/
+
+- Añadido `db.sqlite3`
+
+### app/post/models.py
+
+- Eliminado límite de caracteres en atributo `cuerpo`.
+
+### BlogInfoBase/settings/local.py
+
+- Agregada configuración de BD; cambiada a SQlite.
+
+### .gitignore
+
+- Línea 9; Eliminadas entradas: `db.sqlite3`, `db.sqlite3-journal`, `media` y `local_settings.py`.
+
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

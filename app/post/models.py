@@ -32,7 +32,7 @@ class Post(models.Model):
                             null=False, 
                             blank=False)
 
-    cuerpo = models.TextField('Cuerpo', max_length=255)
+    cuerpo = models.TextField('Cuerpo')
 
     img = models.ImageField(upload_to=user_directory_path, default="post/infoblog-logo.png")
 
