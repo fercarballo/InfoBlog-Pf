@@ -10,24 +10,30 @@ Este repositorio contiene una instalación limpia de Django, es por esto que se 
 
 Para asegurar la compatibilidad y autosuficiencia del código, es necesario crear un entorno virtual.
 
-Una vez que tengamos creado un directorio de trabajo, se debe abrir una ventana del Símbolo del Sistema con privilegios de administrador y ejecutar el siguiente comando.
+
+Una vez que tengamos creado un directorio de trabajo, se debe abrir una ventana del Símbolo del Sistema con privilegios de administrador en ese directorio y ejecutar el siguiente comando.
 ```sh
-python -m venv .
+python -m venv env
 ```
-Esto nos creará un entorno virtual utilizando [venv], en el mismo directorio donde se ejecuta el comando.
+Esto nos creará un entorno virtual utilizando [venv], y lo guardará en una carpeta llamada `env`
+
 
 Una vez creado el entorno virtual, se lo debe iniciar con los siguientes comandos:
 
 ```sh
-cd Scripts
+cd env\Scripts
 activate.bat
+cd..
+cd..
 ```
 
 > Nota: Es posible que este paso de un error si la política 
 > de seguridad del sistema no permite la ejecución de scripts.
 > De suceder, se debe ejecutar el siguiente comando en una 
 > ventana de PowerShell con privilegios administrativos:
+
 > ```Set-ExecutionPolicy RemoteSigned -Scope CurrentUser```
+
 > Es común que solicite una confirmación, de ser así, se debe ingresar 
 la letra `S` y presionar `Enter`.
 > Esto además resolverá el problema si se presenta en el terminal
@@ -37,10 +43,11 @@ Ahora, el entorno virtual está instalado y activado. No cierren este terminal, 
 
 # Clonar el repositorio e instalar dependencias
 
-Dentro de la carpeta `Scripts`, se debe crear una nueva carpeta donde se clonará el código.
+En el directorio de trabajo, se debe crear una carpeta nueva.
 El nombre de esta carpeta no importa y puede ser arbitrario, ya que solo sirve como un contenedor para ordenar mejor las cosas.
 
-Una vez creada, se debe ingresar a la misma y ejecutar los siguientes comandos:
+Una vez creada, se debe ingresar a la misma y ejecutar los siguientes comandos en un terminal GIT:
+
 
 ```sh
 git init
@@ -49,7 +56,8 @@ git fetch origin
 git checkout main
 ```
 
-Una vez clonado el código, se deben instalar las dependencias descriptas en el archivo `requeriments.txt`, ejecutando el siguiente comando en el terminal del Símbolo del Sistema que dejamos abierto:
+Una vez clonado el código, se deben instalar las dependencias descriptas en el archivo `requeriments.txt`, ejecutando el siguiente comando en el terminal del Símbolo del Sistema que dejamos abierto, (debe estar posicionado en el directorio donde clonamos el código):
+
 
 ```sh
 pip install -r requeriments.txt
@@ -63,10 +71,12 @@ Ya tenemos todo lo que necesitamos para comenzar a utilizar Django, solamente fa
 
 Si abrimos el archivo `BlogInfoBase\settings.py`, veremos que Django está esperando el poder conectarse a una base de datos de MySql llamada `Final_Info_Testing`.
 Por lo tanto, debemos crear una base de datos con el mismo nombre.
+
+
 En MySql WorkBench, ejecutamos el siguiente comando:
 
 ```sh
-CREATE SCHEMA Final_Info_Testing;
+CREATE SCHEMA 'Final_Info_Testing';
 ```
 
 > Nota: El nombre de esta base de datos también es arbitrario, pero 
@@ -75,7 +85,15 @@ al pushear cambios al repositorio.
 
 ## _Migración de datos_
 Al cambiar de base de datos, Django nos pide aplicar las migraciones de datos desde cero.
-Ya podemos comenzar a utilizar Visual Studio Code para facilitar la experiencia, a partir de este momento, todos los comandos van a ser corridos en el terminal de Visual Studio Code.
+
+Ya podemos comenzar a utilizar Visual Studio Code para facilitar la experiencia.
+
+(A partir de este momento, todos los comandos van a ser corridos en el terminal de Visual Studio Code.)
+
+Al abrir Visual Studio Code, se recomienda utilizar CMD en vez de PowerShell en el terminal integrado, ya que CMD activa automáticamente el entorno virtual.
+
+Si el entorno virtual no está activado, seguimos estos pasos: (Si ya está activado, podemos saltarlo)
+
 
 Abrimos Visual Studio Code y navegamos hasta la carpeta `Scripts` del entorno virtual.
 Una vez en ese directorio, ejecutamos el siguiente comando en el terminal de Visual Studio Code:
@@ -101,7 +119,8 @@ python .\manage.py createsuperuser
 
 Esto nos dará un pequeño programa interactivo que nos pedirá ingresar un usuario, un correo electrónico y una contraseña.
 
-Si precionamos enter sin haber ingresado nada cuando nos pide un usuario, el usuario se convierte en el nombre de usuario del sistema. De lo contrario, podemos ingresar el usuario que queramos, el cual se recomienda que sea sencillo, ya que se va a estar usando constantemente y escribir un usuario complicado cada vez que se necesite entrar al panel de administración se vuelve muy tedioso, muy rápido.
+Si presionamos enter sin haber ingresado nada cuando nos pide un usuario, el usuario se convierte en el nombre de usuario del sistema. De lo contrario, podemos ingresar el usuario que queramos, el cual se recomienda que sea sencillo, ya que se va a estar usando constantemente y escribir un usuario complicado cada vez que se necesite entrar al panel de administración se vuelve muy tedioso, muy rápido.
+
 
 Luego, nos pide un correo, el cual puede estar en blanco, ya que no se usa para acceder al panel administrativo.
 
@@ -122,8 +141,10 @@ Lo único que resta hacer para confirmar que todo funcione correctamente, es eje
 python .\manage.py runserver
 ```
 Este comando abre el servidor en la dirección `127.0.0.1:8000/`.
+
 Si nos vamos a esa dirección en nuestro navegador, deberíamos ver la página por defecto de Django, con la leyenda:
 `The install worked successfully! Congratulations!`
 
 [//]: #
 [venv]: <https://docs.python.org/es/3/library/venv.html>
+

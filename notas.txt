@@ -1,0 +1,37 @@
+App Categoría
+
+- Eliminado atributo id; es creado automáticamente
+- Agreagdo __str__
+- App registrada en Admin
+
+App Comentarios
+
+- Eliminado atributo id; es creado automáticamente
+- Agregada importación de módulos Post y Usuarios
+- Cambiado META ordering de "id_date_joined" a "fecha"
+- App registrada en Admin
+
+App Post
+
+- Eliminado atributo id; es creado automáticamente
+- Agregada importación de módulo Categoría
+- Cambiado atributo "slug" de "CharField" a "SlugField"
+- Cambiado on_delete del atributo categoría
+- Cambiado META ordering de "id__date__joined" a "fecha_creacion"
+- Cambiado atributo img, ya no es obligatorio
+- App registrada en Admin
+
+App Usuarios
+
+- Eliminado atributo id; es creado automáticamente
+- Agregado atributo fecha_registro, no se ha de mostrar en la vista
+- Cambiado atributo contraseña, de "contraseña" a "contrasena"
+- Movida clase META de models.py a forms.py
+- Cambiado META ordering a "fecha_registro"
+- Agregado __str__
+- App registrada en Admin
+
+Settings
+
+- Configuradas las distintas settings
+- Solucionados errores varios de nombres

@@ -1,0 +1,24 @@
+{% extends "base/base.html" %} {%block contenido%} {%for post in posts%}
+<article>
+    < <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <!-- Post preview-->
+                <div class="post-preview">
+                    <a href="post.html">
+                        <h2 class="post-title">
+                            {{post.titulo}}                           
+                        </h2>
+                        <a href="http://127.0.0.1:8000/"><img src="{{post.img.url}}" alt="imagen del post" /></a>
+                        <h3 class="post-subtitle">
+                            Publicado el día<time datetime="2012-10-15T12:00">{{post.fecha_creacion}}</time>
+                            <p>{{post.descripcion}}</p>
+                        </h3>
+                </div>
+</article>
+{%endfor%} {%endblock%}
+
+<!--
+    Este archivo simplemente itera sobre todos los posts que hay en la base de datos y muestra los títulos de cada uno
+    Es solo para probar que funcione
+-->
