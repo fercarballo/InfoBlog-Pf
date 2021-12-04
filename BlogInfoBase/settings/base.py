@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'Final_Info_Testing',
         'ENGINE': 'mysql.connector.django',
         'USER': 'root',
-        'PASSWORD': '1234',
+        'PASSWORD': 'root',
         'OPTIONS': {
           'autocommit': True,
         },
@@ -129,9 +129,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(BASE_DIR),'static'),)
+    os.path.join(BASE_DIR,'static'),)
 MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media"),
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
