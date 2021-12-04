@@ -4,5 +4,5 @@ from .models import Post
 # Create your views here.
 
 def inicio_view(request):
-    posts = Post.objects.all()
-    return render(request, 'base/index.html', context={"posts":posts})
+    posts = Post.objects.filter(estado = True) #se filtra solo los post activos.
+    return render(request, 'base/index.html', {'posts':posts})

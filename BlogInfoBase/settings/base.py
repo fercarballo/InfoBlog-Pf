@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'Final_Info_Testing',
         'ENGINE': 'mysql.connector.django',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '1234',
         'OPTIONS': {
           'autocommit': True,
         },
