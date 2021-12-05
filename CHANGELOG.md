@@ -71,5 +71,36 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 - Línea 9; Eliminadas entradas: `db.sqlite3`, `db.sqlite3-journal`, `media` y `local_settings.py`.
 
+---
+
+## Vesión (0.3.0) (05/11/21)
+
+### Cambios 
+
+### BlogInfoBase/urls.py
+
+- Añadida inclusión del archivo `urls.py` de la app `post` con su propio `namespace`.
+
+### templates/base/index.html
+
+- Cambio de `href` en ambas tags `a`; de `127.0.0.0:8000` a función `obtener_url_absoluta` del modelo `Post`.
+
+### templates/post/post_simple.html
+
+- Añadido `post_simple.html`; Un html súper simple que muestra información del post en cuestión.
+
+### app/post/models.py
+
+- Añadida función `obtener_url_absoluta`: Devuelve una URL para redireccionar al post en cuestión.
+- Añadida función `__str__`.
+
+### app/post/urls.py
+
+- Añadido archivo `urls.py`; Espera una URL en forma de slug y devuelve la vista correspondiente.
+
+### app/post/views.py
+
+- Añadida vista `vista_post`. Será modificada en un futuro para agregar funcionalidad de comentarios.  
+
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

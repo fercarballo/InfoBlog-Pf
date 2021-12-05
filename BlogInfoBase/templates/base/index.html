@@ -5,11 +5,11 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <!-- Post preview-->
                 <div class="post-preview">
-                    <a href="post.html">
+                    <a href="{{post.obtener_url_absoluta}}">
                         <h2 class="post-title">
                             {{post.titulo}}                           
                         </h2>
-                        <a href="http://127.0.0.1:8000/"><img src="{{post.img.url}}" alt="imagen del post" /></a>
+                        <a href="{{post.obtener_url_absoluta}}"><img src="{{post.img.url}}" alt="imagen del post" /></a>
                         <h3 class="post-subtitle">
                             Publicado el día<time datetime="2012-10-15T12:00">{{post.fecha_creacion}}</time>
                             <p>{{post.descripcion}}</p>

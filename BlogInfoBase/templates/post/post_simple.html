@@ -1,0 +1,11 @@
+{%extends 'base/base.html'%}
+
+
+{%block contenido%}
+
+<h1>{{post.titulo}}</h1>
+<small>Publicado el {{post.fecha_creacion}}</small>
+<br><br>
+<p>{{post.cuerpo|safe}}</p>
+
+{%endblock%}
