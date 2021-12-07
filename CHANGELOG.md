@@ -102,5 +102,31 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 - Añadida vista `vista_post`. Será modificada en un futuro para agregar funcionalidad de comentarios.  
 
+## Vesión (0.4.0) (07/11/21)
+
+### Cambios 
+
+### BlogInfoBase/templates/base/post/busqueda.html
+
+- Agregado `busqueda.html`; será usado para mostrar los resultados de búsqueda.
+
+### BlogInfoBase/templates/base/post/base.html
+
+- Agregado `Block título`; permite cambiar el título de manera dinámica.
+- Agregado `Block posts`; aísla la iteración de posts del `Block contenido`.
+
+### BlogInfoBase/templates/base/post/index.html
+
+- Agregada barra de navegación en `Block contenido`.
+
+### app/post/models.py
+
+- Solucionado pequeño error de comentario.
+
+### app/post/views.py
+
+- Modificada `inicio_view`; agregada funcionalidad para procesar request de búsqueda. 
+
+
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

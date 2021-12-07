@@ -17,12 +17,12 @@ archivos staticos para modificar cosas visuales :)-->
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <title>InfoBlog</title>
+    {%block titulo%} <title>InfoBlog</title> {%endblock%}
 
     <link href="{% static 'css/main.css' %}" rel="stylesheet" />
   </head>
   <body>
-    {%include 'base/header.html'%} {%block contenido%} {%endblock%} {%include 'base/footer.html'%}
+    {%include 'base/header.html'%} {%block contenido%} {%block posts%}  {%endblock%} {%endblock%} {%include 'base/footer.html'%}
 
     <!-- Por si se necesita js
         <script src="index.js"></script> 

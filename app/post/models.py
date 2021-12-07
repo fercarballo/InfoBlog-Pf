@@ -19,7 +19,7 @@ class Post(models.Model):
            Devuelve: La URL del post en cuestión usando el atributo slug del post.
            Usada en: index.html como href de la tag <a> en la línea de la imagen del post.
            Cada vez que se presione en la imagen de un post en la página principal, se llamará
-           esta función, la que le dará una URL a la view "vista_post".'''
+           esta función, la que llamará al patrón de url "vista_post".'''
 
         return reverse('post:vista_post', args=[self.slug])
 
