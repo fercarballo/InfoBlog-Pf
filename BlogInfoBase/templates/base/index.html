@@ -1,39 +1,155 @@
-{% extends "base/base.html" %} 
-{%block contenido%} 
+{%extends 'base/base.html'%}
+{%load static%}
+  
+{%block titulo%} <title>InfoBlog | Inicio</title> {%endblock%}
 
-    <form class="form-inline my-2 my-lg-0"> {%comment%}{% csrf_token %} No creo que sea necesario usar un token en la busqueda.{%endcomment%}
-        <input class="form-control mr-sm-2" type="search" placeholder="Ingrese su búsqueda" aria-label="Search" name="busqueda" >
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-    </form>
-    {%block posts%}
-    
-    {%for post in posts%}         
-        <article>
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">
-                        <!-- Post preview-->
-                        <div class="post-preview">
-                            <a href="{{post.obtener_url_absoluta}}">
-                                <h2 class="post-title">
-                                    {{post.titulo}}                           
-                                </h2></a>
-                                <a href="{{post.obtener_url_absoluta}}"><img src="{{post.img.url}}" alt="imagen del post" /></a>
-                                <h3 class="post-subtitle">
-                                    Publicado el día<time datetime="2012-10-15T12:00">{{post.fecha_creacion}}</time>
-                                    <p>{{post.descripcion}}</p>
-                                </h3>                            
+<body>
+  {%block contenido%}
+
+  <header
+    class="masthead"
+    style="background-image: url({% static 'assets/img/background-saveplanet.jpg' %});";>
+    <!-- Texto central -->
+    <div class="container-fluid position-relative col-lg-11">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-10">
+          <div class="site-heading">
+            <h1>
+              17 Objetivos de Desarrollo Sostenible para un único desafío:
+            </h1>
+            <span class="subheading"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- Contenido de la página-->
+
+  <div class="container">
+    <div class="row">
+        <!-- Posts del blog -->
+        <div class="col-lg-8">
+            <!-- Post destacado -->
+            <div class="card mb-4">
+                <a href="{{post_destacado.obtener_url_absoluta}}"><img class="card-img-top" src="{{post_destacado.img.url}}" alt="..." /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{post_destacado.fecha_creacion}}</div>
+                    <h2 class="card-title">{{post_destacado.titulo}}</h2>
+                    <p class="card-text">{{post_destacado.descripcion}}</p>
+                    <a class="btn btn-primary" href="{{post_destacado.obtener_url_absoluta}}">Leer más →</a>
+                </div>
+            </div>
+            <!-- Nested row for non-featured blog posts-->
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- Blog post-->
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">January 1, 2021</div>
+                            <h2 class="card-title h4">Post Title</h2>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                            <a class="btn btn-primary" href="#!">Read more →</a>
+                        </div>
+                    </div>
+                    <!-- Blog post-->
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">January 1, 2021</div>
+                            <h2 class="card-title h4">Post Title</h2>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                            <a class="btn btn-primary" href="#!">Read more →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <!-- Blog post-->
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">January 1, 2021</div>
+                            <h2 class="card-title h4">Post Title</h2>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+                            <a class="btn btn-primary" href="#!">Read more →</a>
+                        </div>
+                    </div>
+                    <!-- Blog post-->
+                    <div class="card mb-4">
+                        <a href="#!"><img class="card-img-top" src="https://dummyimage.com/700x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">January 1, 2021</div>
+                            <h2 class="card-title h4">Post Title</h2>
+                            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam.</p>
+                            <a class="btn btn-primary" href="#!">Read more →</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </article>
+            <!-- Paginación -->
+            <nav aria-label="Pagination">
+                <hr class="my-0" />
+                <ul class="pagination justify-content-center my-4">
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Más recientes</a></li>
+                    <li class="page-item active" aria-current="page"><a class="page-link" href="#!">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">3</a></li>
+                    <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">15</a></li>
+                    <li class="page-item"><a class="page-link" href="#!">Más antiguos</a></li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Widgets-->
+        <div class="col-lg-4">
+            <!-- Search widget-->
+            <div class="card mb-4">
+                <div class="card-header">Búsqueda</div>
+                <div class="card-body">
+                  <form class="form-inline"> 
+                    
+                    <div class="form-group mx-sm-3 mb-2">                      
+                        <input class="form-control" type="search" placeholder="Ingrese su búsqueda... " aria-label="Enter search term..." aria-describedby="button-search" name="busqueda" />
+                        <button class="btn btn-primary mb-2" id="button-search" type="submit">Buscar</button>
+                    </div> 
 
-    {%endfor%} 
-    {%endblock%}
-{%endblock%}
+                  </form> 
+                
+                </div>
+            </div>
+            <!-- Categories widget-->
+            <div class="card mb-4">
+                <div class="card-header">Filtros</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#!">Web Design</a></li>
+                                <li><a href="#!">HTML</a></li>
+                                <li><a href="#!">Freebies</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a href="#!">JavaScript</a></li>
+                                <li><a href="#!">CSS</a></li>
+                                <li><a href="#!">Tutorials</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4">
+                <div class="card-header">Side Widget</div>
+                <div class="card-body">You can put anything you want inside of these side widgets. They are easy to use, and feature the Bootstrap 5 card component!</div>
+            </div>
+        </div>
+    </div>
+  </div>
 
-<!--
-    Este archivo simplemente itera sobre todos los posts que hay en la base de datos y muestra los títulos de cada uno
-    Es solo para probar que funcione
--->
+  {%endblock%}
+
+</body>

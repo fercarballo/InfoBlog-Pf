@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Post
+from app.categoria.models import Categoria
 
 
 def inicio_view(request):
@@ -16,17 +17,29 @@ def inicio_view(request):
 
     termino_busqueda = ""
     url = "base/index.html"
+    cats = Categoria.objects.all().filter(estado=True).order_by('nombre')
+    post_destacado = Post.objects.all().filter(estado=True, destacado=True)
+    print(post_destacado)
 
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
         termino_busqueda = request.GET['busqueda']
         url = "post/busqueda.html"
         
-        posts = Post.objects.all().filter(titulo__icontains=termino_busqueda, estado=True)            
+        posts = Post.objects.all().filter(titulo__icontains=termino_busqueda, estado=True)
+                    
     
     else:        
         posts = Post.objects.filter(estado = True)
 
-    return render(request, url, {'posts':posts, 'query':termino_busqueda})
+
+    contexto = {
+        "posts": posts,
+        "query": termino_busqueda,
+        "categorias": cats,
+        "post_destacado": post_destacado[0]
+    }
+
+    return render(request, url, contexto)
 
 
 
