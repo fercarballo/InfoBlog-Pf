@@ -1,6 +1,8 @@
 from django.shortcuts import get_object_or_404, render
 from .models import Post
 from app.categoria.models import Categoria
+from django.core.paginator import Paginator
+from app.utils.utils import paginar
 
 
 def inicio_view(request):
@@ -11,33 +13,33 @@ def inicio_view(request):
        y se establece la url a "post/busqueda.html".
        De lo contrario, se procede a buscar todos los posts y la url queda con su valor por defecto de "base/index.html".
        
-       Esta implementación no es del todo correcta, está ligada fuertemente a la implementación de la barra de búsqueda 
-       en el archivo "index.html", esta solución funciona solo si la barra se encuentra en ese archivo, 
-       de lo contrario, habrá que crear una vista propia para la búsqueda.'''
+    '''
 
     termino_busqueda = ""
     url = "base/index.html"
     cats = Categoria.objects.all().filter(estado=True).order_by('nombre')
-    post_destacado = Post.objects.all().filter(estado=True, destacado=True)
-    print(post_destacado)
+    post_destacado = Post.objects.all().filter(estado=True, destacado=True)    
 
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
         termino_busqueda = request.GET['busqueda']
         url = "post/busqueda.html"
         
-        posts = Post.objects.all().filter(titulo__icontains=termino_busqueda, estado=True)
-                    
+        posts = Post.objects.all().filter(titulo__icontains=termino_busqueda, estado=True, destacado=False)        
     
     else:        
-        posts = Post.objects.filter(estado = True)
+        posts = Post.objects.filter(estado = True, destacado=False)
 
+    p = Paginator(posts, 2)
+    posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
 
     contexto = {
         "posts": posts,
         "query": termino_busqueda,
         "categorias": cats,
-        "post_destacado": post_destacado[0]
-    }
+        "post_destacado": post_destacado[0],
+        "paginas": posts_paginados,
+        "numero_paginas": paginar(posts_paginados)[1]        
+        }    
 
     return render(request, url, contexto)
 
