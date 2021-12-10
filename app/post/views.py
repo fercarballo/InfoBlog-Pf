@@ -1,3 +1,4 @@
+from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from .models import Post
 from app.categoria.models import Categoria
@@ -16,9 +17,8 @@ def inicio_view(request):
     '''
 
     termino_busqueda = ""
-    url = "base/index.html"
-    cats = Categoria.objects.all().filter(estado=True).order_by('nombre')
-    post_destacado = Post.objects.all().filter(estado=True, destacado=True)    
+    url = "base/index.html"    
+    # post_destacado = Post.objects.all().filter(estado=True, destacado=True)    
 
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
         termino_busqueda = request.GET['busqueda']
@@ -34,12 +34,10 @@ def inicio_view(request):
 
     contexto = {
         "posts": posts,
-        "query": termino_busqueda,
-        "categorias": cats,
-        "post_destacado": post_destacado[0],
+        "query": termino_busqueda,                
         "paginas": posts_paginados,
         "numero_paginas": paginar(posts_paginados)[1]        
-        }    
+        }
 
     return render(request, url, contexto)
 
@@ -55,3 +53,23 @@ def vista_post(request, post: str):
     objeto_post = get_object_or_404(Post, slug=post)    
     
     return render(request, 'post/post_simple.html', {"post": objeto_post})
+
+
+def vista_paginada(request, *args, **kwargs):
+    # TODO Agregar captura de search=?
+
+    posts = Post.objects.filter(estado = True, destacado=False)
+    posts_a_mostrar = posts[(kwargs["num"]-1)*4:]
+    cantidad_posts = len(posts)
+    
+
+    p = Paginator(posts_a_mostrar, 2)
+    posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
+    
+    contexto = {
+        "pagina_solicitada": kwargs["num"],
+        "paginas": posts_paginados,
+        "numero_paginas": paginar(posts_paginados, cuenta_posts=cantidad_posts, pagina_elegida= kwargs["num"])[1]
+
+    }
+    return render(request, "post/paginacion.html", context=contexto)
