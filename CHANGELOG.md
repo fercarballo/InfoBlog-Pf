@@ -13,7 +13,7 @@ Este sistema funciona de la siguiente manera:
 
 ---
 
-## Vesión (0.1.0) (04/11/21)
+## Vesión (0.1.0) (04/12/21)
 
 ### Cambios
 
@@ -49,7 +49,7 @@ Este sistema funciona de la siguiente manera:
 
 ---
 
-## Vesión (0.2.0) (04/11/21)
+## Vesión (0.2.0) (04/12/21)
 
 En esta versión se cambia la base de datos a SQLite para facilitar la transferencia de información entre el grupo. Esto se revertirá en la versión final.
 
@@ -73,7 +73,7 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 ---
 
-## Vesión (0.3.0) (05/11/21)
+## Vesión (0.3.0) (05/12/21)
 
 ### Cambios 
 
@@ -102,7 +102,7 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 - Añadida vista `vista_post`. Será modificada en un futuro para agregar funcionalidad de comentarios.  
 
-## Vesión (0.4.0) (07/11/21)
+## Vesión (0.4.0) (07/12/21)
 
 ### Cambios 
 
@@ -127,6 +127,37 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 - Modificada `inicio_view`; agregada funcionalidad para procesar request de búsqueda. 
 
+
+## Versión (0.5.0-alpha) (09/12/21)
+
+## Cambios
+
+### BlogInfoBase/templates/base
+
+- Reescritos archivos `base.html`, `footer.html`, `header.html` y `index.html`.
+
+### app/post/admin.py
+
+- Añadida opción de filtrado `destacado` en atributo `search_filters`.
+
+### app/post/models.py
+
+- Añadido atributo `destacado`; `BooleanField`. Usado para destacar el post.
+
+### app/post/views.py
+
+- Agregada variable `post_destacado`; Recibe el post destacado de la base de datos.
+- Agregada lógica de búsqueda y filtrado de posts.
+- Agregada variable `post_paginados`; Recibe los grupos de posts para mostrar en cada página provenientes de `p`.
+- Actualizado `contexto`; Ahora es una variable aparte.
+
+### app/utils/utils.py
+
+- Agregada función `paginar`; Resuelve los números a mostrar en la barra de paginación del post.
+
+### BlogInfoBase/db.sqlite3
+
+- Agregados muchos posts de prueba, deben ser eliminados en la versión final.
 
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

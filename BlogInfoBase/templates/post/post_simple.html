@@ -1,11 +1,46 @@
 {%extends 'base/base.html'%}
+{%load static%}
 
 
-{%block contenido%}
+{%block titulo%} <title>{{post.titulo}} | InfoBlog</title> {%endblock%}
 
-<h1>{{post.titulo}}</h1>
-<small>Publicado el {{post.fecha_creacion}}</small>
-<br><br>
-<p>{{post.cuerpo|safe}}</p>
+<body>
+    {%block contenido%}
+    <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            <p><h1>{{post.titulo}}</h1></p>
+            <small>Publicado el {{post.fecha_creacion}}</small>            
+            <p>{{post.cuerpo|safe}}</p>
+        </div>  
 
-{%endblock%}
+        <div class="col-md-8">
+            {%with comentarios.count as total_comments%}
+                {% if total_comments != 0 %}
+                    <h2>
+                    {{total_comments}} comentario{{ total_comments|pluralize }}                    
+                    </h2>
+                {%else%}
+                    <h2>
+                        No hay comentarios. ¡Publica el primero!
+                    </h2>
+                {% endif %}
+            {%endwith%}
+  
+            {%for comentario in comentarios%}
+  
+              Comentario {{ forloop.counter }} por {{ comentario.autor }}
+              {{comentario.fecha}}
+              {{comentario.cuerpo|linebreaks}}
+  
+            {%empty%}
+            {%endfor%}
+            
+            <form id="FormaComentario" method="post">
+                {{forma_comentario.as_p}}
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Publicar</button>
+            </form>
+    
+    </div>
+    {%endblock%}
+</body>
