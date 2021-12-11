@@ -1,9 +1,10 @@
-from django.http.response import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from app.usuarios.models import Usuarios
 from .models import Post
-from app.categoria.models import Categoria
 from django.core.paginator import Paginator
 from app.utils.utils import paginar
+from django.http.response import HttpResponseRedirect
+from app.comentarios.forms import FormComentario
 
 
 def inicio_view(request):
@@ -17,8 +18,7 @@ def inicio_view(request):
     '''
 
     termino_busqueda = ""
-    url = "base/index.html"    
-    # post_destacado = Post.objects.all().filter(estado=True, destacado=True)    
+    url = "base/index.html"     
 
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
         termino_busqueda = request.GET['busqueda']
@@ -29,6 +29,8 @@ def inicio_view(request):
     else:        
         posts = Post.objects.filter(estado = True, destacado=False)
 
+    #paginar y obtener posts de cada pagina
+    
     p = Paginator(posts, 2)
     posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
 
@@ -50,20 +52,45 @@ def vista_post(request, post: str):
        Utiliza la función get_object_or_404 para buscar en Post, todos los resultados donde la slug
        sea igual a la que le pasamos y el estado sea Publicado. Si no se encuentra, levanta error 404.'''
     
-    objeto_post = get_object_or_404(Post, slug=post)    
+    objeto_post = get_object_or_404(Post, slug=post)
+    comentarios = objeto_post.comentarios.filter(estado= True)   
+    # Lógica comentarios, checkea si se hace una request POST, y de ahí, si el comentario es válido se lo guarda
+    # Si no, simplemente se envía una instancia de FormComentario vacía para poder mostrarla en el template.
+    comentario_nuevo = None
+    if request.method == "POST":
+        form_comentario= FormComentario(request.POST)
+        if form_comentario.is_valid():
+            comentario_nuevo = form_comentario.save(commit=False)
+            comentario_nuevo.post_id = objeto_post
+            comentario_nuevo.autor = Usuarios.objects.filter(nombre="admin")[0] # Usuario por defecto: admin. Esto cambiará a request.user.username cuando funcione el login
+            comentario_nuevo.save()
+            return HttpResponseRedirect("/"+objeto_post.slug)
+    else:
+        form_comentario = FormComentario()
+
+    contexto={
+        "post": objeto_post, 
+        "comentarios": comentarios, 
+        "comentario": comentario_nuevo,
+        "forma_comentario": form_comentario
+    }
     
-    return render(request, 'post/post_simple.html', {"post": objeto_post})
+    return render(request, 'post/post_simple.html', context=contexto)
 
 
 def vista_paginada(request, *args, **kwargs):
+    '''
+    Se encarga de mostrar los posts que deberían estar en cada número de página
+    '''
     # TODO Agregar captura de search=?
-
+    # Roto; construye el contexto
     posts = Post.objects.filter(estado = True, destacado=False)
     posts_a_mostrar = posts[(kwargs["num"]-1)*4:]
     cantidad_posts = len(posts)
     
-
+    # Paginar los posts en grupos de dos. Permite acceder al contenido de cada página con el atributo .page()
     p = Paginator(posts_a_mostrar, 2)
+    # Obtener la lista de posts de cada una de las páginas
     posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
     
     contexto = {
@@ -73,3 +100,19 @@ def vista_paginada(request, *args, **kwargs):
 
     }
     return render(request, "post/paginacion.html", context=contexto)
+
+def vista_categoria(request, *args, **kwargs):
+    posts = Post.objects.filter(categoria__nombre=kwargs["cat"], estado=True)  
+
+    # Paginar los posts en grupos de dos. Permite acceder al contenido de cada página con el atributo .page()
+    p = Paginator(posts, 2)
+    # Obtener la lista de posts de cada una de las páginas
+    posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
+
+    contexto = {
+        "posts": posts,                        
+        "paginas": posts_paginados,
+        "numero_paginas": paginar(posts_paginados)[1]        
+        }
+
+    return render(request, "categoria/categoria.html", context=contexto)

@@ -1,0 +1,35 @@
+{%extends 'base/index.html'%}
+{%load static%}
+
+{%comment%}
+Acá iría todo el html de cada categoría, como la imagen y un poco de información
+
+{%endcomment%}
+
+{%block posts%}
+
+<div class="row">
+    {%for pagina in paginas|slice:":2"%}
+    
+        <div class="col-lg-6">
+            <!-- Blog post-->
+
+            {%for post in pagina%}
+            
+            <div class="card mb-4">
+                <a href="#!"><img class="card-img-top" src="{{post.img.url}}" alt="..." /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{post.fecha_creacion}}</div>
+                    <h2 class="card-title h4">{{post.titulo}}</h2>
+                    <p class="card-text">{{post.descripcion}}</p>
+                    <a class="btn btn-primary" href="{{post.obtener_url_absoluta}}">Leer más →</a>
+                </div>
+            </div>
+            {%endfor%}
+
+        </div>
+    {%endfor%}
+    
+</div>
+
+{%endblock%}
