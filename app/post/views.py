@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render
 from app.usuarios.models import Usuarios
 from .models import Post
 from django.core.paginator import Paginator
-from app.utils.utils import paginar
+from app.utils.utils import paginar, resolver_paginacion
 from django.http.response import HttpResponseRedirect
 from app.comentarios.forms import FormComentario
 
@@ -18,16 +18,25 @@ def inicio_view(request):
     '''
 
     termino_busqueda = ""
-    url = "base/index.html"     
+    # url = "base/index.html"     
+
+    # if 'busqueda' in request.GET and request.GET['busqueda'] != "":
+    #     termino_busqueda = request.GET['busqueda']
+    #     url = "post/busqueda.html"
+        
+    #     posts = Post.objects.all().filter(titulo__icontains=termino_busqueda, estado=True, destacado=False)
+
+    #     vista_busqueda(request, posts=posts, query=request.GET['busqueda'])        
+    
+    # else:        
+    #     posts = Post.objects.filter(estado = True, destacado=False)
+
+
+    posts = Post.objects.filter(estado = True, destacado=False)
 
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
-        termino_busqueda = request.GET['busqueda']
-        url = "post/busqueda.html"
-        
-        posts = Post.objects.all().filter(titulo__icontains=termino_busqueda, estado=True, destacado=False)        
-    
-    else:        
-        posts = Post.objects.filter(estado = True, destacado=False)
+        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")        
+        #return vista_busqueda(request, posts=posts, query=request.GET['busqueda'])  
 
     #paginar y obtener posts de cada pagina
     
@@ -38,10 +47,10 @@ def inicio_view(request):
         "posts": posts,
         "query": termino_busqueda,                
         "paginas": posts_paginados,
-        "numero_paginas": paginar(posts_paginados)[1]        
+        "numero_paginas": paginar(len(posts))[1]        
         }
 
-    return render(request, url, contexto)
+    return render(request, "base/index.html" , contexto)
 
 
 
@@ -78,13 +87,24 @@ def vista_post(request, post: str):
     return render(request, 'post/post_simple.html', context=contexto)
 
 
-def vista_paginada(request, *args, **kwargs):
+def vista_paginada(request, *args, posts_in = None, **kwargs):
     '''
     Se encarga de mostrar los posts que deberían estar en cada número de página
     '''
     # TODO Agregar captura de search=?
     # Roto; construye el contexto
-    posts = Post.objects.filter(estado = True, destacado=False)
+    if 'busqueda' in request.GET and request.GET['busqueda'] != "":
+        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")
+    
+    if posts_in:
+        if posts_in[0] == None:
+            posts = []
+        else:
+            posts = posts_in
+            
+    else:
+        posts = Post.objects.filter(estado=True, destacado=False)        
+ 
     posts_a_mostrar = posts[(kwargs["num"]-1)*4:]
     cantidad_posts = len(posts)
     
@@ -96,7 +116,7 @@ def vista_paginada(request, *args, **kwargs):
     contexto = {
         "pagina_solicitada": kwargs["num"],
         "paginas": posts_paginados,
-        "numero_paginas": paginar(posts_paginados, cuenta_posts=cantidad_posts, pagina_elegida= kwargs["num"])[1]
+        "numero_paginas": paginar(cantidad_posts, cuenta_posts=cantidad_posts, pagina_elegida= kwargs["num"])[1]
 
     }
     return render(request, "post/paginacion.html", context=contexto)
@@ -112,7 +132,21 @@ def vista_categoria(request, *args, **kwargs):
     contexto = {
         "posts": posts,                        
         "paginas": posts_paginados,
-        "numero_paginas": paginar(posts_paginados)[1]        
+        "numero_paginas": paginar(len(posts_paginados))[1]        
         }
 
     return render(request, "categoria/categoria.html", context=contexto)
+
+def vista_busqueda(request, **kwargs):
+    
+    posts_filtrados = Post.objects.all().filter(titulo__icontains=kwargs['query'])
+    
+    if len(posts_filtrados) == 0:
+        posts_filtrados = [None]
+
+    if 'num' in kwargs:
+        kwargs['num']
+    else:
+        kwargs["num"] = 1
+
+    return vista_paginada(request, posts_in=posts_filtrados, num=kwargs['num'])
