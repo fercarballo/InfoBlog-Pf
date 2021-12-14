@@ -71,6 +71,10 @@
                                 <a class="btn btn-primary" href="{{post.obtener_url_absoluta}}">Leer más →</a>
                             </div>
                         </div>
+                        {%empty%}
+
+                        <h2>No hay resultados.</h2>
+
                         {%endfor%}
 
                     </div>
@@ -79,6 +83,7 @@
             </div>
             {%endblock%}
             <!-- Paginación -->
+            {%block paginacion%}
             <nav aria-label="Pagination">
                 <hr class="my-0" />
                 <ul class="pagination justify-content-center my-4">
@@ -96,6 +101,7 @@
                     <li class="page-item disabled"><a class="page-link" href="#!">Más antiguos</a></li>
                 </ul>
             </nav>
+            {%endblock%}
         </div>
         <!-- Widgets-->
         <div class="col-lg-4">
