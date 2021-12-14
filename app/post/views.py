@@ -1,10 +1,14 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
 from app.usuarios.models import Usuarios
 from .models import Post
 from django.core.paginator import Paginator
 from app.utils.utils import paginar, resolver_paginacion
 from django.http.response import HttpResponseRedirect
 from app.comentarios.forms import FormComentario
+#-----------------------------------------
+from .forms import CrearUsuarioForm
+from django.contrib.auth import authenticate, login
+#-----------------------------------------
 
 
 def inicio_view(request):
@@ -150,3 +154,16 @@ def vista_busqueda(request, **kwargs):
         kwargs["num"] = 1
 
     return vista_paginada(request, posts_in=posts_filtrados, num=kwargs['num'])
+
+def registro(request):
+    form = CrearUsuarioForm()
+    if request.method == 'POST':
+        formulario = CrearUsuarioForm(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            user = authenticate(username=formulario.cleaned_data['username'],password=formulario.cleaned_data['password1'])
+            login(request,user)
+            return redirect('inicio')
+
+    context = {'form':form}
+    return render(request,'registration/register.html',context)
