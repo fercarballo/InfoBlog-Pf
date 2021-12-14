@@ -159,5 +159,36 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 - Agregados muchos posts de prueba, deben ser eliminados en la versión final.
 
+
+## Version (0.6.0) (14/12/2021)
+
+Primera versión que contiene el sistma de usuarios. Entre la versión 0.5.0-alpha y esta hubo muchos cambios, por lo que solo se muestra una vista general de lo que cambió.
+
+### Cambios
+
+### app/categoria/views.py
+
+- Agregada `vista_categoria`
+
+### app/categoria/urls.py
+
+- Agregado `urls.py` con las url relacionadas.
+
+### app/post/urls.py
+
+- Agregadas urls relacionadas.
+
+### app/post/views.py
+
+- Agregadas views relacionadas.
+
+### BlogInfoBase/settings/base.py
+
+- Cambiado `language` de `en-us` a `es-es`
+
+### templates/
+
+- Agregados/modificados los archivos html.
+
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from app.usuarios.models import Usuarios
 from .models import Post
 from django.core.paginator import Paginator
-from app.utils.utils import paginar, resolver_paginacion
+from app.utils.utils import paginar
 from django.http.response import HttpResponseRedirect
 from app.comentarios.forms import FormComentario
 #-----------------------------------------
@@ -21,41 +21,20 @@ def inicio_view(request):
        
     '''
 
-    termino_busqueda = ""
-    # url = "base/index.html"     
-
-    # if 'busqueda' in request.GET and request.GET['busqueda'] != "":
-    #     termino_busqueda = request.GET['busqueda']
-    #     url = "post/busqueda.html"
-        
-    #     posts = Post.objects.all().filter(titulo__icontains=termino_busqueda, estado=True, destacado=False)
-
-    #     vista_busqueda(request, posts=posts, query=request.GET['busqueda'])        
-    
-    # else:        
-    #     posts = Post.objects.filter(estado = True, destacado=False)
-
-
     posts = Post.objects.filter(estado = True, destacado=False)
 
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
-        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")        
-        #return vista_busqueda(request, posts=posts, query=request.GET['busqueda'])  
-
-    #paginar y obtener posts de cada pagina
-    
+        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")    
     p = Paginator(posts, 2)
     posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
 
     contexto = {
-        "posts": posts,
-        "query": termino_busqueda,                
+        "posts": posts,                      
         "paginas": posts_paginados,
         "numero_paginas": paginar(len(posts))[1]        
         }
 
     return render(request, "base/index.html" , contexto)
-
 
 
 def vista_post(request, post: str):
@@ -95,10 +74,9 @@ def vista_paginada(request, *args, posts_in = None, **kwargs):
     '''
     Se encarga de mostrar los posts que deberían estar en cada número de página
     '''
-    # TODO Agregar captura de search=?
-    # Roto; construye el contexto
+    
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
-        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")
+        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")    
     
     if posts_in:
         if posts_in[0] == None:
@@ -107,43 +85,32 @@ def vista_paginada(request, *args, posts_in = None, **kwargs):
             posts = posts_in
             
     else:
-        posts = Post.objects.filter(estado=True, destacado=False)        
- 
+        if 'query' in kwargs:            
+            posts = Post.objects.filter(estado=True, destacado=False, titulo__icontains=kwargs['query'])                  
+        else:
+            posts = Post.objects.filter(estado=True, destacado=False)
+
     posts_a_mostrar = posts[(kwargs["num"]-1)*4:]
-    cantidad_posts = len(posts)
+    cantidad_posts = len(posts)    
     
-    # Paginar los posts en grupos de dos. Permite acceder al contenido de cada página con el atributo .page()
-    p = Paginator(posts_a_mostrar, 2)
-    # Obtener la lista de posts de cada una de las páginas
+    p = Paginator(posts_a_mostrar, 2)    
     posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
     
     contexto = {
         "pagina_solicitada": kwargs["num"],
         "paginas": posts_paginados,
         "numero_paginas": paginar(cantidad_posts, cuenta_posts=cantidad_posts, pagina_elegida= kwargs["num"])[1]
-
     }
+
+    if 'query' in kwargs:
+        contexto['query'] = kwargs['query']
+
     return render(request, "post/paginacion.html", context=contexto)
 
-def vista_categoria(request, *args, **kwargs):
-    posts = Post.objects.filter(categoria__nombre=kwargs["cat"], estado=True)  
-
-    # Paginar los posts en grupos de dos. Permite acceder al contenido de cada página con el atributo .page()
-    p = Paginator(posts, 2)
-    # Obtener la lista de posts de cada una de las páginas
-    posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
-
-    contexto = {
-        "posts": posts,                        
-        "paginas": posts_paginados,
-        "numero_paginas": paginar(len(posts_paginados))[1]        
-        }
-
-    return render(request, "categoria/categoria.html", context=contexto)
 
 def vista_busqueda(request, **kwargs):
     
-    posts_filtrados = Post.objects.all().filter(titulo__icontains=kwargs['query'])
+    posts_filtrados = Post.objects.all().filter(titulo__icontains=kwargs['query'])    
     
     if len(posts_filtrados) == 0:
         posts_filtrados = [None]
@@ -153,7 +120,8 @@ def vista_busqueda(request, **kwargs):
     else:
         kwargs["num"] = 1
 
-    return vista_paginada(request, posts_in=posts_filtrados, num=kwargs['num'])
+    return vista_paginada(request, posts_in=posts_filtrados, num=kwargs['num'], query=kwargs['query'])
+
 
 def registro(request):
     form = CrearUsuarioForm()
