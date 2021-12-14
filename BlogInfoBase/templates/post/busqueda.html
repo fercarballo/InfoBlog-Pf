@@ -1,40 +1,21 @@
 {%extends 'base/index.html'%} 
-{%comment%}
 
-Extiende index en vez de base para que la barra de búsqueda no aparezca en todos lados
-Se puede cambiar y mover la barra de búsqueda a navbar.html, pero eso cambiaría la lógica de la vista
-{%endcomment%}
-
-{%block posts%}
-
-{%if posts%}
-
-    <h1>Resultados de búsqueda para "{{query}}"</h1>
-    
-        {%for post in posts%}         
-            <article>
-                <div class="container px-4 px-lg-5">
-                    <div class="row gx-4 gx-lg-5 justify-content-center">
-                        <div class="col-md-10 col-lg-8 col-xl-7">                            
-                            <div class="post-preview">
-                                <a href="{{post.obtener_url_absoluta}}">
-                                    <h2 class="post-title">
-                                        {{post.titulo}}                           
-                                    </h2>
-                                    <a href="{{post.obtener_url_absoluta}}"><img src="{{post.img.url}}" alt="imagen del post" /></a>
-                                    <h3 class="post-subtitle">
-                                        Publicado el: {{post.fecha_creacion}}
-                                        <p>{{post.descripcion}}</p>
-                                    </h3>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
-        {%endfor%} 
-{% else %}
-    <h3>No se han encontrado resultados para "{{query}}".</h3>
-{%endif%}
-   
-{%endblock%}
+{%block paginacion%}
+            <nav aria-label="Pagination">
+                <hr class="my-0" />
+                <ul class="pagination justify-content-center my-4">
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Más recientes</a></li>
+                    
+                    {%for numero in numero_paginas%}
+                        
+                    {%if numero == "..."%}
+                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                                                
+                    {%else%}
+                        <li class="page-item" ><a class="page-link" href="{% url 'post:vista_busqueda' numero %}">{{numero}}</a></li>
+                    {%endif%}
+                    {%endfor%}
+                    <li class="page-item disabled"><a class="page-link" href="#!">Más antiguos</a></li>
+                </ul>
+            </nav>
+            {%endblock%}

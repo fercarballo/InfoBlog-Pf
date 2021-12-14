@@ -25,16 +25,34 @@
             >Sobre nosotros</a
           >
         </li>
+        <!-- Inicio y registro de usuarios -->
+        {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html"
-            >Iniciar sesion</a
+          <div class="badge bg-primary text-wrap">{{user.username}}</div>
+          <a
+            class="nav-link"
+            aria-current="page"
+            href="{% url 'logout' %}"
+            >Cerrar Sesión</a
           >
         </li>
+        {% else %}
         <li class="nav-item">
-          <a class="nav-link px-lg-3 py-3 py-lg-4" href="post.html"
+          <a
+            class="nav-link"
+            aria-current="page"
+            href="{% url 'login' %}"
+            >iniciar Sesión</a
+          >
+        </li>
+        {% endif %}
+        </li>
+        <li class="nav-item">
+          <a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'registro' %}"
             >Registrarse</a
           >
         </li>
+        <!-- Fin inicio y registro de usuarios -->
         <li class="nav-item dropdown">
           <a class="nav-link px-lg-3 py-3 py-lg-4 dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Objetivos
@@ -42,7 +60,7 @@
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
             {%for categoria in categorias%}
-            <li><a class="dropdown-item" href="/categoria/{{categoria.nombre}}">{{categoria}}</a></li>
+            <li><a class="dropdown-item" href="/categoria/{{categoria.nombre}}/">{{categoria}}</a></li>
             {%endfor%}
             
           </ul>

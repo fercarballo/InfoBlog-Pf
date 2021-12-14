@@ -6,6 +6,6 @@ app_name = "post"
 urlpatterns = [       
     path('<slug:post>/', views.vista_post, name="vista_post"),
     path('page/<int:num>', views.vista_paginada, name="vista_paginada"),
-    path('categoria/<str:cat>', views.vista_categoria, name="vista_categoria"),
     path('search/<str:query>', views.vista_busqueda, name="vista_busqueda"),
+    path('search/<str:query>/page<int:num>', views.vista_busqueda, name="vista_busqueda_paginada")
 ]

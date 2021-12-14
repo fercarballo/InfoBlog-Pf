@@ -13,8 +13,6 @@ def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida =
        pagina_elegida: Default 1. Indica la página que solicitamos (page/n), será útil para arreglar los números de paginación.  
        debug: Default False. Loggea información el la consola con el nivel de prioridad INFO'''
 
-    # TODO Agregar captura de search=?
-    # TODO Changelog
     logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
     if not debug:
         logging.disable()
@@ -43,6 +41,3 @@ def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida =
 
     return (paginas, paginas_ab)
 
-
-def resolver_paginacion(*args):
-    print(args)
