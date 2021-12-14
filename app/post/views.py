@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.shortcuts import get_object_or_404, render, redirect
 from app.usuarios.models import Usuarios
 from .models import Post
@@ -128,10 +129,10 @@ def registro(request):
     if request.method == 'POST':
         formulario = CrearUsuarioForm(data=request.POST)
         if formulario.is_valid():
-            formulario.save()
+            formulario.save() #guarda usuario 
             user = authenticate(username=formulario.cleaned_data['username'],password=formulario.cleaned_data['password1'])
-            login(request,user)
-            return redirect('inicio')
+            login(request,user) #loguea al usuario recien creado
+            return redirect('inicio') #redirige al index.html
 
     context = {'form':form}
     return render(request,'registration/register.html',context)
