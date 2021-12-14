@@ -7,6 +7,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("", inicio_view), #esta ligada a app post
+    path("", inicio_view, name="vista_inicio"), #esta ligada a app post
     path("", include("app.post.urls", namespace="Post"))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

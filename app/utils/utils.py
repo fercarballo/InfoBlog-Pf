@@ -1,6 +1,6 @@
 import logging
 
-def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida = 1, debug=True):
+def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida = 1, debug=False):
     
     '''Determinar la lista de páginas a mostrar según la cantidad de posts.
        Toma: Obj; Una lista que contiene todos los posts.
@@ -14,7 +14,6 @@ def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida =
        debug: Default False. Loggea información el la consola con el nivel de prioridad INFO'''
 
     # TODO Agregar captura de search=?
-    # TODO Arreglar números de paginación
     # TODO Changelog
     logging.basicConfig(format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S', level=logging.INFO)
     if not debug:
@@ -26,9 +25,9 @@ def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida =
     logging.info(f"kwarg Posts totales: {cuenta_posts}")       
 
         
-    paginas = [x+1 for x in range(len(obj)//2)]\
-              if len(obj) % 2 == 0\
-              else [x+1 for x in range((len(obj)//2)+1)]
+    paginas = [x+1 for x in range(obj//4)]\
+              if obj % 2 == 0\
+              else [x+1 for x in range((obj//4)+1)]
 
     logging.info(f"Var 'paginas': {paginas}")
 
@@ -43,3 +42,7 @@ def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida =
     logging.info(f"Var 'paginas_ab': {paginas_ab}\n")    
 
     return (paginas, paginas_ab)
+
+
+def resolver_paginacion(*args):
+    print(args)
