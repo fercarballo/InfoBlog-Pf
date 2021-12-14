@@ -1,0 +1,59 @@
+{%extends 'base/index.html'%}
+{%load static%}
+
+{%comment%}
+Acá iría todo el html de cada categoría, como la imagen y un poco de información
+
+{%endcomment%}
+
+{%block posts%}
+<div class="row">
+    {%for pagina in paginas|slice:":2"%}
+    
+        <div class="col-lg-6">
+            <!-- Blog post-->
+
+            {%for post in pagina%}
+            
+            <div class="card mb-4">
+                <a href="#!"><img class="card-img-top" src="{{post.img.url}}" alt="..." /></a>
+                <div class="card-body">
+                    <div class="small text-muted">{{post.fecha_creacion}}</div>
+                    <h2 class="card-title h4">{{post.titulo}}</h2>
+                    <p class="card-text">{{post.descripcion}}</p>
+                    <a class="btn btn-primary" href="{{post.obtener_url_absoluta}}">Leer más →</a>
+                </div>
+            </div>
+            {%empty%}
+
+            <h2>No hay resultados.</h2>
+
+            {%endfor%}
+
+        </div>
+    {%endfor%}
+    
+</div>
+{%endblock%}
+
+
+{%block paginacion%}
+            <nav aria-label="Pagination">
+                <hr class="my-0" />
+                <ul class="pagination justify-content-center my-4">
+                    <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Más recientes</a></li>
+                    
+                    {%for numero in numero_paginas%}
+                        
+                    {%if numero == "..."%}
+                        <li class="page-item disabled"><a class="page-link" href="#!">...</a></li>
+                                                
+                    {%else%}                        
+                        <li class="page-item" ><a class="page-link" href="{% url 'categoria:vista_categoria_paginada' categoria numero %}">{{numero}}</a></li>
+                        
+                    {%endif%}
+                    {%endfor%}
+                    <li class="page-item disabled"><a class="page-link" href="#!">Más antiguos</a></li>
+                </ul>
+            </nav>
+{%endblock%}
