@@ -13,7 +13,7 @@
             <p>{{post.cuerpo|safe}}</p>
         </div>
         <!-- COMENTARIOS necesario logueo para ver y participar -->  
-        {% if user.is_authenticated %}
+        
         <div class="col-md-8">
             {%with comentarios.count as total_comments%}
                 {% if total_comments != 0 %}
@@ -26,15 +26,16 @@
                     </h2>
                 {% endif %}
             {%endwith%}
-  
+                    
             {%for comentario in comentarios%}
   
               Comentario {{ forloop.counter }} por {{ comentario.autor }}
               {{comentario.fecha}}
               {{comentario.cuerpo|linebreaks}}
-  
+                    
             {%empty%}
-            {%endfor%}     
+            {%endfor%}
+        {% if user.is_authenticated %}
             <form id="FormaComentario" method="post">
                 {{forma_comentario.as_p}}
                 {% csrf_token %}
@@ -43,7 +44,7 @@
         {% else %}
             <div class= "container text-center m-3">
                 <div class="align-items-center">
-                    <h5> Para ver los comentarios y participar es necesario loguearse </h5>
+                    <h5> Para participar es necesario loguearse </h5>
                     <a class="btn btn-primary" aria-current="page" href="{% url 'login' %}">Iniciar Sesión</a>
                     <a class="btn btn-primary" aria-current="page" href="{% url 'registro' %}">Registrarse</a> 
                 </div>
