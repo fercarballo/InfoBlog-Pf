@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.shortcuts import get_object_or_404, render, redirect
 from app.usuarios.models import Usuarios
 from .models import Post
