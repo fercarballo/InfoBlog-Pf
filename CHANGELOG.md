@@ -13,7 +13,7 @@ Este sistema funciona de la siguiente manera:
 
 ---
 
-## Vesión (0.1.0) (04/11/21)
+## Vesión (0.1.0) (04/12/21)
 
 ### Cambios
 
@@ -49,7 +49,7 @@ Este sistema funciona de la siguiente manera:
 
 ---
 
-## Vesión (0.2.0) (04/11/21)
+## Vesión (0.2.0) (04/12/21)
 
 En esta versión se cambia la base de datos a SQLite para facilitar la transferencia de información entre el grupo. Esto se revertirá en la versión final.
 
@@ -70,6 +70,143 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 ### .gitignore
 
 - Línea 9; Eliminadas entradas: `db.sqlite3`, `db.sqlite3-journal`, `media` y `local_settings.py`.
+
+---
+
+## Vesión (0.3.0) (05/12/21)
+
+### Cambios 
+
+### BlogInfoBase/urls.py
+
+- Añadida inclusión del archivo `urls.py` de la app `post` con su propio `namespace`.
+
+### templates/base/index.html
+
+- Cambio de `href` en ambas tags `a`; de `127.0.0.0:8000` a función `obtener_url_absoluta` del modelo `Post`.
+
+### templates/post/post_simple.html
+
+- Añadido `post_simple.html`; Un html súper simple que muestra información del post en cuestión.
+
+### app/post/models.py
+
+- Añadida función `obtener_url_absoluta`: Devuelve una URL para redireccionar al post en cuestión.
+- Añadida función `__str__`.
+
+### app/post/urls.py
+
+- Añadido archivo `urls.py`; Espera una URL en forma de slug y devuelve la vista correspondiente.
+
+### app/post/views.py
+
+- Añadida vista `vista_post`. Será modificada en un futuro para agregar funcionalidad de comentarios.  
+
+## Vesión (0.4.0) (07/12/21)
+
+### Cambios 
+
+### BlogInfoBase/templates/base/post/busqueda.html
+
+- Agregado `busqueda.html`; será usado para mostrar los resultados de búsqueda.
+
+### BlogInfoBase/templates/base/post/base.html
+
+- Agregado `Block título`; permite cambiar el título de manera dinámica.
+- Agregado `Block posts`; aísla la iteración de posts del `Block contenido`.
+
+### BlogInfoBase/templates/base/post/index.html
+
+- Agregada barra de navegación en `Block contenido`.
+
+### app/post/models.py
+
+- Solucionado pequeño error de comentario.
+
+### app/post/views.py
+
+- Modificada `inicio_view`; agregada funcionalidad para procesar request de búsqueda. 
+
+
+## Versión (0.5.0-alpha) (09/12/21)
+
+## Cambios
+
+### BlogInfoBase/templates/base
+
+- Reescritos archivos `base.html`, `footer.html`, `header.html` y `index.html`.
+
+### app/post/admin.py
+
+- Añadida opción de filtrado `destacado` en atributo `search_filters`.
+
+### app/post/models.py
+
+- Añadido atributo `destacado`; `BooleanField`. Usado para destacar el post.
+
+### app/post/views.py
+
+- Agregada variable `post_destacado`; Recibe el post destacado de la base de datos.
+- Agregada lógica de búsqueda y filtrado de posts.
+- Agregada variable `post_paginados`; Recibe los grupos de posts para mostrar en cada página provenientes de `p`.
+- Actualizado `contexto`; Ahora es una variable aparte.
+
+### app/utils/utils.py
+
+- Agregada función `paginar`; Resuelve los números a mostrar en la barra de paginación del post.
+
+### BlogInfoBase/db.sqlite3
+
+- Agregados muchos posts de prueba, deben ser eliminados en la versión final.
+
+
+## Version (0.6.0) (14/12/2021)
+
+Primera versión que contiene el sistma de usuarios. Entre la versión 0.5.0-alpha y esta hubo muchos cambios, por lo que solo se muestra una vista general de lo que cambió.
+
+### Cambios
+
+### app/categoria/views.py
+
+- Agregada `vista_categoria`
+
+### app/categoria/urls.py
+
+- Agregado `urls.py` con las url relacionadas.
+
+### app/post/urls.py
+
+- Agregadas urls relacionadas.
+
+### app/post/views.py
+
+- Agregadas views relacionadas.
+
+### BlogInfoBase/settings/base.py
+
+- Cambiado `language` de `en-us` a `es-es`
+
+### templates/
+
+- Agregados/modificados los archivos html.
+
+## Version (0.7.0) (16/12/2021)
+
+Version con cambios esteticos principalmente, se incluyó un html como modelo para la presentación de información en las categorías que se debe modularizar para una mejor optimizacíon.
+
+### Cambios
+
+### BlogInfoBase/templates/post/post_simplehtml
+
+- se agrego una estructura para los post/categoría de ejemplo-
+
+### BlogInfoBase/templates/footer.html
+
+- se modificó el footer por problemas de compatibilidad con los nuevos cambios visuales.
+
+### BlogInfoBase/templates/index.html
+
+- se cambiaron aspectos visuales y se agregaron archivos de css y js. desde un template diferente al que ya teníamos con más opciones visuales.
 
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

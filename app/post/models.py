@@ -1,5 +1,6 @@
 from django.db import models
 from app.categoria.models import Categoria
+from django.urls import reverse
 
 # Create your models here.
 class Post(models.Model):
@@ -12,6 +13,15 @@ class Post(models.Model):
         así puede crear automáticamente esta carpeta y mover ahí el archivo en cuestión.'''
         
         return f"post/{instance.id}/{filename}"
+
+    def obtener_url_absoluta(self):
+        '''Toma: self.
+           Devuelve: La URL del post en cuestión usando el atributo slug del post.
+           Usada en: index.html como href de la tag <a> en la línea de la imagen del post.
+           Cada vez que se presione en la imagen de un post en la página principal, se llamará
+           esta función, la que llamará al patrón de url "vista_post".'''
+
+        return reverse('post:vista_post', args=[self.slug])
 
     titulo = models.CharField('Título', 
                               max_length=100, 
@@ -40,6 +50,8 @@ class Post(models.Model):
 
     categoria = models.ForeignKey(Categoria, on_delete=models.SET(0))
 
+    destacado = models.BooleanField("Destacar", default=False)
+
     # la forma mas facil de ocultar un post es poniéndole una categoría que no se muestre
     # Si no, la lógica para eliminar o cambiar un atributo se vuelve complicada, ya que
     # los atributos de los modelos no son atributos como tal, si no que son agregados por metaclasses
@@ -47,3 +59,6 @@ class Post(models.Model):
 
     class Meta:
         ordering = ('fecha_creacion', )
+
+    def __str__(self) -> str:
+        return self.titulo

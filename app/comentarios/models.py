@@ -6,13 +6,16 @@ from app.usuarios.models import Usuarios
 
 
 class Comentarios(models.Model):   
-    post_id = models.ForeignKey(Post, on_delete=CASCADE)
+    post_id = models.ForeignKey(Post, on_delete=CASCADE, related_name="comentarios")
     autor   = models.ForeignKey(Usuarios, on_delete=CASCADE)
     fecha   = models.DateField('Fecha de Creación',
                              auto_now=False,
                              auto_now_add=True)
     cuerpo  = models.TextField('Cuerpo', max_length=255)
-    estado  = models.BooleanField(default=False)
+    estado  = models.BooleanField(default=True)
 
     class Meta:
         ordering = ('fecha', )
+
+    def __str__(self) -> str:
+        return str(self.autor)

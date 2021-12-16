@@ -15,4 +15,4 @@ class Usuarios(models.Model):
         ordering = ("fecha_registro",)
     
     def __str__(self) -> str:
-        return self.id
+        return str(self.nombre)
