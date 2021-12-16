@@ -1,5 +1,21 @@
 import logging
+from functools import wraps
+import time
 
+
+def temporizar(func):
+    """Print the runtime of the decorated function"""
+    @wraps(func)
+    def wrapper_timer(*args, **kwargs):
+        tiempo_comienzo = time.perf_counter()
+        valor = func(*args, **kwargs)
+        tiempo_final = time.perf_counter()      
+        tiempo_total = tiempo_final - tiempo_comienzo    
+        logging.info(f"Función {func.__name__!r} corrió en {tiempo_total:.4f} segundos.")
+        return valor
+    return wrapper_timer
+
+@temporizar
 def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida = 1, debug=False):
     
     '''Determinar la lista de páginas a mostrar según la cantidad de posts.

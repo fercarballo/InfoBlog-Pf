@@ -3,15 +3,14 @@ from django.shortcuts import get_object_or_404, render, redirect
 from app.usuarios.models import Usuarios
 from .models import Post
 from django.core.paginator import Paginator
-from app.utils.utils import paginar
+from app.utils.utils import paginar, temporizar
 from django.http.response import HttpResponseRedirect
 from app.comentarios.forms import FormComentario
-#-----------------------------------------
 from .forms import CrearUsuarioForm
 from django.contrib.auth import authenticate, login
-#-----------------------------------------
 
 
+@temporizar
 def inicio_view(request):
     '''Encargada de resolver la Request y decidir qué mostrar en base a la acción que toma el usuario.
        Si el usuario está buscando algo, se muestra "busqueda.html", de lo contrario, se muestra "index.html".
@@ -37,7 +36,7 @@ def inicio_view(request):
 
     return render(request, "base/index.html" , contexto)
 
-
+@temporizar
 def vista_post(request, post: str):
     '''Recibir la URL del post de la función obtener_url_absoluta y mostrarla.
        Toma: Una request y un String que represente la url del post.
@@ -70,7 +69,7 @@ def vista_post(request, post: str):
     
     return render(request, 'post/post_simple.html', context=contexto)
 
-
+@temporizar
 def vista_paginada(request, *args, posts_in = None, **kwargs):
     '''
     Se encarga de mostrar los posts que deberían estar en cada número de página
@@ -108,7 +107,7 @@ def vista_paginada(request, *args, posts_in = None, **kwargs):
 
     return render(request, "post/paginacion.html", context=contexto)
 
-
+@temporizar
 def vista_busqueda(request, **kwargs):
     
     posts_filtrados = Post.objects.all().filter(titulo__icontains=kwargs['query'])    
@@ -123,7 +122,7 @@ def vista_busqueda(request, **kwargs):
 
     return vista_paginada(request, posts_in=posts_filtrados, num=kwargs['num'], query=kwargs['query'])
 
-
+@temporizar
 def registro(request):
     form = CrearUsuarioForm()
     if request.method == 'POST':
