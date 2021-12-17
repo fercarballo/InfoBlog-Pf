@@ -1,10 +1,11 @@
 from django.shortcuts import render
 from app.post.models import Post
 from django.core.paginator import Paginator
-from app.utils.utils import paginar
+from app.utils.utils import paginar, temporizar
 from django.http.response import HttpResponseRedirect
 
 
+@temporizar
 def vista_categoria(request, *args, **kwargs):
     posts = Post.objects.filter(categoria__nombre=kwargs["cat"], estado=True)   
     

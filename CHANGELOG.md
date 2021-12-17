@@ -190,5 +190,23 @@ Primera versión que contiene el sistma de usuarios. Entre la versión 0.5.0-alp
 
 - Agregados/modificados los archivos html.
 
+## Version (0.7.0) (16/12/2021)
+
+Version con cambios esteticos principalmente, se incluyó un html como modelo para la presentación de información en las categorías que se debe modularizar para una mejor optimizacíon.
+
+### Cambios
+
+### BlogInfoBase/templates/post/post_simplehtml
+
+- se agrego una estructura para los post/categoría de ejemplo-
+
+### BlogInfoBase/templates/footer.html
+
+- se modificó el footer por problemas de compatibilidad con los nuevos cambios visuales.
+
+### BlogInfoBase/templates/index.html
+
+- se cambiaron aspectos visuales y se agregaron archivos de css y js. desde un template diferente al que ya teníamos con más opciones visuales.
+
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

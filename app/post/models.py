@@ -24,7 +24,7 @@ class Post(models.Model):
         return reverse('post:vista_post', args=[self.slug])
 
     titulo = models.CharField('Título', 
-                              max_length=100, 
+                              max_length=150, 
                               null=False, 
                               blank=False)
 
