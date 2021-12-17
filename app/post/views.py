@@ -1,6 +1,4 @@
-from django.conf.urls import url
 from django.shortcuts import get_object_or_404, render, redirect
-from app.usuarios.models import Usuarios
 from .models import Post
 from django.core.paginator import Paginator
 from app.utils.utils import paginar, temporizar
@@ -8,6 +6,7 @@ from django.http.response import HttpResponseRedirect
 from app.comentarios.forms import FormComentario
 from .forms import CrearUsuarioForm
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
 
 
 @temporizar
@@ -45,7 +44,7 @@ def vista_post(request, post: str):
        sea igual a la que le pasamos y el estado sea Publicado. Si no se encuentra, levanta error 404.'''
     
     objeto_post = get_object_or_404(Post, slug=post)
-    comentarios = objeto_post.comentarios.filter(estado= True)   
+    comentarios = objeto_post.comentarios.filter(estado= True)
     # Lógica comentarios, checkea si se hace una request POST, y de ahí, si el comentario es válido se lo guarda
     # Si no, simplemente se envía una instancia de FormComentario vacía para poder mostrarla en el template.
     comentario_nuevo = None
@@ -54,7 +53,7 @@ def vista_post(request, post: str):
         if form_comentario.is_valid():
             comentario_nuevo = form_comentario.save(commit=False)
             comentario_nuevo.post_id = objeto_post
-            comentario_nuevo.autor = Usuarios.objects.filter(nombre="admin")[0] # Usuario por defecto: admin. Esto cambiará a request.user.username cuando funcione el login
+            comentario_nuevo.autor = User.objects.filter(username = request.user.username)[0]
             comentario_nuevo.save()
             return HttpResponseRedirect("/"+objeto_post.slug)
     else:
