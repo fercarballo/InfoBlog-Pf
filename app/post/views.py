@@ -10,7 +10,7 @@ from django.contrib.auth.models import User
 
 
 @temporizar
-def inicio_view(request):
+def inicio_view(request, **kwargs):
     '''Encargada de resolver la Request y decidir qué mostrar en base a la acción que toma el usuario.
        Si el usuario está buscando algo, se muestra "busqueda.html", de lo contrario, se muestra "index.html".
        
@@ -23,7 +23,13 @@ def inicio_view(request):
     posts = Post.objects.filter(estado = True, destacado=False)
 
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
-        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")    
+        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")
+
+    if 'fecha' in request.GET and request.GET['fecha'] != "":
+        return HttpResponseRedirect(f"/fecha/{request.GET['fecha']}")
+
+    print(kwargs)
+
     p = Paginator(posts, 2)
     posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
 
@@ -32,6 +38,8 @@ def inicio_view(request):
         "paginas": posts_paginados,
         "numero_paginas": paginar(len(posts))[1]        
         }
+
+    
 
     return render(request, "base/index.html" , contexto)
 
@@ -47,6 +55,10 @@ def vista_post(request, post: str):
     comentarios = objeto_post.comentarios.filter(estado= True)
     # Lógica comentarios, checkea si se hace una request POST, y de ahí, si el comentario es válido se lo guarda
     # Si no, simplemente se envía una instancia de FormComentario vacía para poder mostrarla en el template.
+    
+    objeto_post.numero_visitas = objeto_post.numero_visitas + 1
+    objeto_post.save()
+    
     comentario_nuevo = None
     if request.method == "POST":
         form_comentario= FormComentario(request.POST)
@@ -55,7 +67,9 @@ def vista_post(request, post: str):
             comentario_nuevo.post_id = objeto_post
             comentario_nuevo.autor = User.objects.filter(username = request.user.username)[0]
             comentario_nuevo.save()
-            return HttpResponseRedirect("/"+objeto_post.slug)
+            objeto_post.numero_comentarios = objeto_post.numero_comentarios + 1
+            objeto_post.save()
+            return HttpResponseRedirect("/post/"+objeto_post.slug)
     else:
         form_comentario = FormComentario()
 
@@ -75,7 +89,12 @@ def vista_paginada(request, *args, posts_in = None, **kwargs):
     '''
     
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
-        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")    
+        return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")
+
+    if 'fecha' in request.GET and request.GET['fecha'] != "":
+        return HttpResponseRedirect(f"/fecha/{request.GET['fecha']}")
+
+    print(kwargs)  
     
     if posts_in:
         if posts_in[0] == None:
@@ -86,6 +105,8 @@ def vista_paginada(request, *args, posts_in = None, **kwargs):
     else:
         if 'query' in kwargs:            
             posts = Post.objects.filter(estado=True, destacado=False, titulo__icontains=kwargs['query'])                  
+        elif 'fecha' in kwargs:
+            posts = Post.objects.filter(estado=True, destacado=False, fecha_creacion=kwargs['fecha'])
         else:
             posts = Post.objects.filter(estado=True, destacado=False)
 
@@ -103,6 +124,15 @@ def vista_paginada(request, *args, posts_in = None, **kwargs):
 
     if 'query' in kwargs:
         contexto['query'] = kwargs['query']
+    
+    if 'fecha' in kwargs:
+        contexto['fecha'] = kwargs['fecha']
+
+    if 'comentarios' in kwargs:
+        contexto['comentarios'] = True
+    
+    if 'visitas' in kwargs:
+        contexto['visitas'] = True
 
     return render(request, "post/paginacion.html", context=contexto)
 
@@ -134,3 +164,30 @@ def registro(request):
 
     context = {'form':form}
     return render(request,'registration/register.html',context)
+
+@temporizar
+def vista_fecha(request, *args,**kwargs):    
+    posts = Post.objects.filter(estado=True, destacado=False, fecha_creacion=kwargs["fecha"])
+    
+    if "num" not in kwargs:
+        kwargs["num"] = 1
+
+    return vista_paginada(request, posts_in=posts, num=kwargs['num'], fecha=kwargs["fecha"])
+
+@temporizar
+def vista_visitas(request, *args,**kwargs):
+    posts = Post.objects.filter(estado=True, destacado=False).order_by("-numero_visitas")
+    
+    if "num" not in kwargs:
+        kwargs["num"] = 1
+
+    return vista_paginada(request, posts_in=posts, num=kwargs['num'], visitas=True)
+
+@temporizar
+def vista_comentarios(request, *args,**kwargs):
+    posts = Post.objects.filter(estado=True, destacado=False).order_by("-numero_comentarios")
+    
+    if "num" not in kwargs:
+        kwargs["num"] = 1
+
+    return vista_paginada(request, posts_in=posts, num=kwargs['num'], comentarios=True)

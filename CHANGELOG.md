@@ -102,6 +102,8 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 - Añadida vista `vista_post`. Será modificada en un futuro para agregar funcionalidad de comentarios.  
 
+---
+
 ## Vesión (0.4.0) (07/12/21)
 
 ### Cambios 
@@ -127,6 +129,7 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 - Modificada `inicio_view`; agregada funcionalidad para procesar request de búsqueda. 
 
+---
 
 ## Versión (0.5.0-alpha) (09/12/21)
 
@@ -159,6 +162,7 @@ En esta versión se cambia la base de datos a SQLite para facilitar la transfere
 
 - Agregados muchos posts de prueba, deben ser eliminados en la versión final.
 
+---
 
 ## Version (0.6.0) (14/12/2021)
 
@@ -190,6 +194,8 @@ Primera versión que contiene el sistma de usuarios. Entre la versión 0.5.0-alp
 
 - Agregados/modificados los archivos html.
 
+---
+
 ## Version (0.7.0) (16/12/2021)
 
 Version con cambios esteticos principalmente, se incluyó un html como modelo para la presentación de información en las categorías que se debe modularizar para una mejor optimizacíon.
@@ -207,6 +213,47 @@ Version con cambios esteticos principalmente, se incluyó un html como modelo pa
 ### BlogInfoBase/templates/index.html
 
 - se cambiaron aspectos visuales y se agregaron archivos de css y js. desde un template diferente al que ya teníamos con más opciones visuales.
+
+---
+
+## Version (0.8.0) (18/12/2021)
+
+Es la primera versión que cumple con todos los requisitos.
+
+### Cambios
+
+### app/post/models.py
+
+- Agregado atributo `numero_comentarios`.
+- Agregado atributo `numero_visitas`.
+
+### app/post/admin.py
+
+- Se excluye la capacidad de edición de los nuevos atributos, y se los agrega en la vista de lista.
+
+### app/post/urls.py
+
+- Agregadas urls necesarias para acomodar los nuevos filtros.
+
+### app/post/views.py
+
+- Modificada `vista_paginada` para acomodar los nuevos filtros.
+- Añadidas vistas `vista_fecha`, `vista_visitas` y `vista_comentarios`.
+- Modificada `vista_inicio` para acomodar los nuevos filtros.
+- Modificada `vista_post` para incrementar el `numero_visitas` y `numero_comentarios` según corresponda.
+
+### app/utils/utils.py
+
+- Agregado bloque Try/Except para lidiar con resultados de búsqueda vacíos.
+
+### BlogInfoBase/templates/base/
+
+- Modificado `index.html`
+- Agregado `fecha.html` y `filtrado.html`
+
+### BlogInfoBase/templates/post
+
+- Modificado `paginacion.html`
 
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

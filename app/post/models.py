@@ -52,6 +52,10 @@ class Post(models.Model):
 
     destacado = models.BooleanField("Destacar", default=False)
 
+    numero_visitas = models.IntegerField(default=0, editable=False)
+
+    numero_comentarios = models.IntegerField(default=0, editable=False)
+
     # la forma mas facil de ocultar un post es poniéndole una categoría que no se muestre
     # Si no, la lógica para eliminar o cambiar un atributo se vuelve complicada, ya que
     # los atributos de los modelos no son atributos como tal, si no que son agregados por metaclasses

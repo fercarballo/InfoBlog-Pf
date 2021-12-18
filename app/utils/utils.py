@@ -36,33 +36,37 @@ def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida =
     logging.info(f"Lista recibida: {obj}")
     logging.info(f"kwarg Páginas a mostrar: {paginas_a_mostrar}") 
     logging.info(f"kwarg Posts totales: {cuenta_posts}")       
+    
+    try:
+        paginas = [x+1 for x in range(obj//4)]\
+                if obj % 2 == 0\
+                else [x+1 for x in range((obj//4)+1)]    
 
-    paginas = [x+1 for x in range(obj//4)]\
-              if obj % 2 == 0\
-              else [x+1 for x in range((obj//4)+1)]    
+        if pagina_elegida > 1:
+            paginas_ab = [*paginas[pagina_elegida-2:pagina_elegida+1]]
+        else:
+            paginas_ab = [*paginas[:pagina_elegida+2]]
 
-    if pagina_elegida > 1:
-        paginas_ab = [*paginas[pagina_elegida-2:pagina_elegida+1]]
-    else:
-        paginas_ab = [*paginas[:pagina_elegida+2]]
+        if paginas_ab[0] - 1 > 1:
+            paginas_ab = [1,
+                        "...",
+                        *paginas_ab]
 
-    if paginas_ab[0] - 1 > 1:
-        paginas_ab = [1,
-                      "...",
-                      *paginas_ab]
+        elif paginas_ab[0] - 1 == 1:
+            paginas_ab = [1, *paginas_ab]
 
-    elif paginas_ab[0] - 1 == 1:
-        paginas_ab = [1, *paginas_ab]
+        if paginas[-1] - paginas_ab[-1] > 1:
+            paginas_ab = [*paginas_ab,
+                        "...",
+                        paginas[-1]]
+        elif paginas[-1] - paginas_ab[-1] == 1:
+            paginas_ab = [1, *paginas_ab[1:], paginas[-1]]
 
-    if paginas[-1] - paginas_ab[-1] > 1:
-        paginas_ab = [*paginas_ab,
-                      "...",
-                      paginas[-1]]
-    elif paginas[-1] - paginas_ab[-1] == 1:
-        paginas_ab = [1, *paginas_ab[1:], paginas[-1]]
-
-    logging.info(f"Var 'paginas_ab': {paginas_ab}\n")    
-
+        logging.info(f"Var 'paginas_ab': {paginas_ab}\n")    
+    
+    except IndexError:
+        return [], []
+        
     return (paginas, paginas_ab)
 
 

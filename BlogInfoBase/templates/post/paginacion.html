@@ -13,6 +13,13 @@
                     {%else%}
                         {% if query %}
                             <li class="page-item" ><a class="page-link" href="{% url 'post:vista_busqueda_paginada' query numero %}">{{numero}}</a></li>
+                        {%elif fecha%}
+                            <li class="page-item" ><a class="page-link" href="{% url 'post:vista_fecha_paginada' fecha numero %}">{{numero}}</a></li>
+                        {%elif comentarios%}
+                            <li class="page-item" ><a class="page-link" href="{% url 'post:vista_comentarios_paginada' numero %}">{{numero}}</a></li>
+                        {%elif visitas%}
+                            <li class="page-item" ><a class="page-link" href="{% url 'post:vista_visitas_paginada' numero %}">{{numero}}</a></li>
+            
                         {%else%}
                             <li class="page-item" ><a class="page-link" href="{% url 'post:vista_paginada' numero %}">{{numero}}</a></li>
                         {%endif%}
