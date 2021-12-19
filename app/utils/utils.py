@@ -1,6 +1,8 @@
 import logging
 from functools import wraps
 import time
+from PIL import Image, ImageDraw, ImageFont
+import random
 
 def temporizar(func):
     """Print the runtime of the decorated function"""
@@ -70,42 +72,44 @@ def paginar(obj: list, paginas_a_mostrar = 3, cuenta_posts = 0, pagina_elegida =
     return (paginas, paginas_ab)
 
 
-# def test_paginar(cantidad_posts, pagina_elegida):
-
-#     paginas = [x+1 for x in range(cantidad_posts//4)]\
-#               if cantidad_posts % 2 == 0\
-#               else [x+1 for x in range((cantidad_posts//4)+1)]    
-
-#     if pagina_elegida > 1:
-#         paginas_ab = [*paginas[pagina_elegida-2:pagina_elegida+1]]
-#     else:
-#         paginas_ab = [*paginas[:pagina_elegida+2]]
-
-#     if paginas_ab[0] - 1 > 1:
-#         paginas_ab = [1,
-#                       "...",
-#                       *paginas_ab]
-
-#     elif paginas_ab[0] - 1 == 1:
-#         paginas_ab = [1, *paginas_ab]
-
-#     if paginas[-1] - paginas_ab[-1] > 1:
-#         paginas_ab = [*paginas_ab,
-#                       "...",
-#                       paginas[-1]]
-#     elif paginas[-1] - paginas_ab[-1] == 1:
-#         paginas_ab = [1, *paginas_ab[1:], paginas[-1]]
+# def generar_imagenes():
+#     '''
+#     Genera todas las imágenes de perfil, muy interesante como para no incluírla
+#     '''
+#     colors = [
+#         "#aa47bc",
+#         "#7a1fa2",
+#         "#78909c",
+#         "#455964",
+#         "#ec407a",
+#         "#c2175b",
+#         "#5c6bc0",
+#         "#0288d1",
+#         "#00579c",
+#         "#0098a6",
+#         "#00887a",
+#         "#004c3f",
+#         "#689f39",
+#         "#ef6c00",
+#         "#f5511e",
+#         "#bf360c"]
     
+#     letras = "ABDCEFGHIJKLMNÑOPQRSTUVWXYZ"
+#     numeros = [0,1,2,3,4,5,6,7,8,9]
+#     simbolos = "@/./+/-/_"
     
+#     W, H = (80,80)
+#     fnt = ImageFont.truetype('app/utils/fonts/Yantramanav-Light.ttf', 50)
+    
+#     for letra in simbolos:
+#         for num in range(2):            
+#             img = Image.new('RGB', (W, H), color = random.choice(colors))
+#             d = ImageDraw.Draw(img)
+#             msg = str(letra)
+#             w, h = d.textsize(msg, font=fnt)
+#             d.text(((W-w)/2,((H-h)/2)-5), msg, fill="#fdfdfe", font=fnt)
 
-#     print(f"""\n\tVariable cantidad_posts: {cantidad_posts}.
-#         Variable pagina_elegida: {pagina_elegida}
-#         Paginas abreviadas: {paginas_ab}.
-#         Paginas totales: {paginas}\n""")
-#     return paginas_ab, paginas
-
+#             img.save(f'BlogInfoBase/media/users/{letra}_{num}.png')
 
 # if __name__ == "__main__":
-    
-#     for i in range(1, 6):
-#         test_paginar(20, i)
+#     generar_imagenes()

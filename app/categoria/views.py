@@ -18,8 +18,7 @@ def vista_categoria(request, *args, **kwargs):
        
     posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
 
-    print(kwargs)
-
+    
     if 'busqueda' in request.GET and request.GET['busqueda'] != "":
         return HttpResponseRedirect(f"/search/{request.GET['busqueda']}")
     
@@ -32,8 +31,6 @@ def vista_categoria(request, *args, **kwargs):
 
     if 'num' in kwargs:
         contexto["numero_paginas"] = paginar(len(posts), cuenta_posts=len(posts), pagina_elegida= kwargs["num"])[1]
-        print(contexto["numero_paginas"])
         contexto["posts_a_mostrar"] = posts[(kwargs["num"]-1)*4:]
-        print(contexto["posts_a_mostrar"])
-
+        
     return render(request, "categoria/categoria.html", context=contexto)

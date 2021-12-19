@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.deletion import CASCADE
 from app.post.models import Post
 from django.contrib.auth.models import User
+import random
 # Create your models here.
 
 
@@ -19,3 +20,12 @@ class Comentarios(models.Model):
 
     def __str__(self) -> str:
         return str(self.autor)
+
+    def obtener_imagen(self):
+        try:
+            letra = self.autor.username[0].upper()
+        except AttributeError:
+            letra = self.autor.username[0]
+            
+        num = random.choice((0,1))
+        return f"{letra}_{num}.png"

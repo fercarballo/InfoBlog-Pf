@@ -322,7 +322,7 @@ COMENTARIOS necesario logueo para ver y participar -->
                     {%endwith%}
                     {%for comentario in comentarios%}
                     <div class="card p-3 mb-4">
-                        <div class="d-flex flex-row"> <img src="https://i.imgur.com/dwiGgJr.jpg" height="40" width="40"
+                        <div class="d-flex flex-row"> <img src="{% get_media_prefix %}/users/{{comentario.obtener_imagen}}" height="40" width="40"
                                 class="rounded-circle">
                             <div class="d-flex flex-column ms-2">
                                 <h6 class="mb-1 text-primary">{{ comentario.autor }}</h6>

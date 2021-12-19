@@ -28,8 +28,7 @@ def inicio_view(request, **kwargs):
     if 'fecha' in request.GET and request.GET['fecha'] != "":
         return HttpResponseRedirect(f"/fecha/{request.GET['fecha']}")
 
-    print(kwargs)
-
+    
     p = Paginator(posts, 2)
     posts_paginados = [p.page(x+1).object_list for x in range(p.num_pages)]
 
@@ -94,8 +93,6 @@ def vista_paginada(request, *args, posts_in = None, **kwargs):
     if 'fecha' in request.GET and request.GET['fecha'] != "":
         return HttpResponseRedirect(f"/fecha/{request.GET['fecha']}")
 
-    print(kwargs)  
-    
     if posts_in:
         if posts_in[0] == None:
             posts = []
