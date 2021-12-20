@@ -47,7 +47,15 @@ INSTALLED_APPS = [
     'app.post',
     'app.usuarios',
     'crispy_forms',
+    'ckeditor',
+
 ]
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+    },
+}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
