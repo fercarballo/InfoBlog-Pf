@@ -2,8 +2,7 @@
 ___
 ## Introducción
 
-Este es el repositorio privado donde estaremos trabajando durante el desarrollo.
-Este repositorio se mantendrá siempre privado, al momento de tener que presentar el proyecto, se abrirá un nuevo repositorio público con los archivos que sean absolutamente necesarios para evitar filtrar datos como pasó en el repositorio de Augusto, que dejaron las claves privadas de Django y las credenciales del correo que usaban para la gestión de la página.
+Este es el repositorio privado público del Grupo 3, de la Comisión 3.
 ___
 ## _Primeros pasos_
 
@@ -52,7 +51,7 @@ Una vez creada, se debe ingresar a la misma y ejecutar los siguientes comandos e
 
 ```sh
 git init
-git remote add origin https://github.com/maxacan/ProyectoDjangoInfo2021.git
+git remote add origin https://github.com/maxacan/InfoBlog2021-P.git
 git fetch origin
 git checkout -b NombreDeRamaNueva
 ```
@@ -104,8 +103,7 @@ python .\manage.py runserver
 ```
 Este comando abre el servidor en la dirección `127.0.0.1:8000/`.
 
-Si nos vamos a esa dirección en nuestro navegador, deberíamos ver la página por defecto de Django, con la leyenda:  
-`The install worked successfully! Congratulations!`
+Si nos vamos a esa dirección en nuestro navegador, deberíamos ver la página funcionando.
 
 [//]: #
 [venv]: <https://docs.python.org/es/3/library/venv.html>
