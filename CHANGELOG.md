@@ -255,5 +255,15 @@ Es la primera versión que cumple con todos los requisitos.
 
 - Modificado `paginacion.html`
 
+---
+
+## Versión (1.0.0) (20/12/21)
+
+La versión final del proyecto.
+
+## Cambios
+
+- Retocados varios aspectos del proyecto, así como solucionados bugs menores y pulido ciertas cosas.
+
 [//]: #
 [Versionado Semántico 2.0.0]: <https://semver.org/lang/es/>

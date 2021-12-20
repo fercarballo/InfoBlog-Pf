@@ -1,6 +1,7 @@
 from django.db import models
 from app.categoria.models import Categoria
 from django.urls import reverse
+from ckeditor.fields import RichTextField
 
 # Create your models here.
 class Post(models.Model):
@@ -42,7 +43,9 @@ class Post(models.Model):
                             null=False, 
                             blank=False)
 
-    cuerpo = models.TextField('Cuerpo')
+    cuerpo = RichTextField('Cuerpo',
+                              null=False, 
+                              blank=False, default="")
 
     img = models.ImageField(upload_to=user_directory_path, default="post/infoblog-logo.png")
 
