@@ -2,7 +2,7 @@
 ___
 ## Introducción
 
-Este es el repositorio privado público del Grupo 3, de la Comisión 3.
+Este es el repositorio público del Grupo 3, de la Comisión 3.
 ___
 ## _Primeros pasos_
 
