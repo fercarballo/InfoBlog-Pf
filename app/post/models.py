@@ -24,7 +24,7 @@ class Post(models.Model):
         return reverse('post:vista_post', args=[self.slug])
 
     titulo = models.CharField('Título', 
-                              max_length=100, 
+                              max_length=150, 
                               null=False, 
                               blank=False)
 
@@ -51,6 +51,10 @@ class Post(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.SET(0))
 
     destacado = models.BooleanField("Destacar", default=False)
+
+    numero_visitas = models.IntegerField(default=0, editable=False)
+
+    numero_comentarios = models.IntegerField(default=0, editable=False)
 
     # la forma mas facil de ocultar un post es poniéndole una categoría que no se muestre
     # Si no, la lógica para eliminar o cambiar un atributo se vuelve complicada, ya que

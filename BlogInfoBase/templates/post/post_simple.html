@@ -1,57 +1,468 @@
 {%extends 'base/base.html'%}
-{%load static%}
-
-
+{% load static %}
 {%block titulo%} <title>{{post.titulo}} | InfoBlog</title> {%endblock%}
 
 <body>
     {%block contenido%}
+    <!--******************* SE REALIZA EL CORTE PARA LA PRUEBA **********-->
+    <header class="ex-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-10 offset-xl-1">
+                    <h1>{{post.titulo}}</h1>
+                    <small class="text-muted">Publicado el {{post.fecha_creacion}}</small>
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </header> <!-- end of ex-header -->
+    <!-- end of header -->
+
+    <!-- Basic -->
+    <div class="ex-basic-1 pt-5 pb-5">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-lg-12">
+                    <img class="img-fluid mt-5 mb-3" src="{{post.img.url}}" alt="alternative">
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of ex-basic-1 -->
+    <!-- end of basic --> 
+
+                    <div class="ex-basic-1 pt-5 pb-5">
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    {{post.cuerpo}}
+                                </div> <!-- end of col -->
+                            </div> <!-- end of row -->
+                        </div> <!-- end of container -->
+                    </div> <!-- end of ex-basic-1 -->
+
+    <br><br> 
+    <!--******************* SE REALIZA EL CORTE PARA LA PRUEBA **********-->
+
+
+
+    <!--
     <div class="row justify-content-md-center">
         <div class="col-md-8">
-            <p><h1>{{post.titulo}}</h1></p>
-            <small>Publicado el {{post.fecha_creacion}}</small>            
+            <p>
+            <h1>{{post.titulo}}</h1>
+            </p>
+            <small>Publicado el {{post.fecha_creacion}}</small>
             <p>{{post.cuerpo|safe}}</p>
         </div>
-        <!-- COMENTARIOS necesario logueo para ver y participar -->  
-        
-        <div class="col-md-8">
-            {%with comentarios.count as total_comments%}
-                {% if total_comments != 0 %}
-                    <h2>
-                    {{total_comments}} comentario{{ total_comments|pluralize }}                    
-                    </h2>
-                {%else%}
+COMENTARIOS necesario logueo para ver y participar -->
+
+
+
+    <div oncontextmenu='return false' class='snippet-body'>
+        <div class="container mt-1">
+            <div class="row d-flex justify-content-center">
+                <div class="col">
+                    <div class="text-left">
+                        {%with comentarios.count as total_comments%}
+                        {% if total_comments != 0 %}
+                        <h6>{{total_comments}} comentario{{ total_comments|pluralize }}</h6>
+                    </div>
+                    {%else%}
                     <h2>
                         No hay comentarios. ¡Publica el primero!
                     </h2>
-                {% endif %}
-            {%endwith%}
-                    
-            {%for comentario in comentarios%}
-  
-              Comentario {{ forloop.counter }} por {{ comentario.autor }}
-              {{comentario.fecha}}
-              {{comentario.cuerpo|linebreaks}}
-                    
-            {%empty%}
-            {%endfor%}
-        {% if user.is_authenticated %}
-            <form id="FormaComentario" method="post">
-                {{forma_comentario.as_p}}
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-lg btn-block">Publicar</button>
-            </form>
-        {% else %}
-            <div class= "container text-center m-3">
-                <div class="align-items-center">
-                    <h5> Para participar es necesario loguearse </h5>
-                    <a class="btn btn-primary" aria-current="page" href="{% url 'login' %}">Iniciar Sesión</a>
-                    <a class="btn btn-primary" aria-current="page" href="{% url 'registro' %}">Registrarse</a> 
+                    {% endif %}
+                    {%endwith%}
+                    {%for comentario in comentarios%}
+                    <div class="card p-3 mb-4">
+                        <div class="d-flex flex-row"> <img src="{% get_media_prefix %}/users/{{comentario.obtener_imagen}}" height="40" width="40"
+                                class="rounded-circle">
+                            <div class="d-flex flex-column ms-2">
+                                <h6 class="mb-1 text-primary">{{ comentario.autor }}</h6>
+                                <p class="comment-text">{{comentario.cuerpo|linebreaks}}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="d-flex flex-row gap-3 align-items-center">
+                                <div class="d-flex align-items-center"> <i class="fa fa-heart"></i> <span
+                                        class="ms-1 fs-10">Like</span> </div>
+                                <div class="d-flex align-items-center"> <i class="fa fa-comment"></i> <span
+                                        class="ms-1 fs-10">Comments</span> </div>
+                            </div>
+                            <div class="d-flex flex-row"> <span
+                                    class="text-muted fw-normal fs-12">{{comentario.fecha}}</span> </div>
+                        </div>
+                    </div>
+                    {%empty%}
+                    {%endfor%}
                 </div>
             </div>
-        {% endif %}
-        <!-- FIN COMENTARIOS -->
         </div>
     </div>
+
+
+
+
+   <!--Basic-->
+<!-- ¡¡Todo este codigo solo sirve para el post de pobreza, y cuando creas un nuevo post sigue apareciendo el mismo contenido, 
+    osea todo referido a pobreza, lo comente todo para usar el contenido de cada post creado desde el admin!! 
+    <div class="ex-basic-1 pt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-10 offset-xl-1">
+                    <p>Cada año, más de 3 millones de niños menores de 5 años mueren de desnutrición o por causas
+                        relacionadas con la misma. El 80% de los casos de desnutrición en sus formas más agudas se
+                        concentran en tan solo 20 países del mundo, concretamente en África subsahariana (países del
+                        Sahel y el Cuerno de África) y en algunas zonas del sur de Asia. En algunas regiones del mundo,
+                        como el Sahel, la consunción es particularmente frecuente en niños durante el periodo de escasez
+                        entre cosechas (también conocido como hunger gap).</p><br>
+                    <h4 class="py-3">A nivel mundial</h4>
+                    <ul class="list-unstyled li-space-lg mb-5">
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>más de 820 millones de personas</strong> en el mundo
+                                padecen hambre en la actualidad.</div>
+                        </li>
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>20,5 millones</strong> es la cantidad de bebés con bajo
+                                peso al nacer (uno de cada siete) </div>
+                        </li>
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>148,9 millones (21,9%)</strong> es la cantidad de niños
+                                menores de 5 años afectados por el retraso en el crecimiento (baja estatura para la
+                                edad)</div>
+                        </li>
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>49,5 millones (7,3%)</strong> es la cantidad de niños
+                                menores de 5 años afectados por emaciación (bajo peso para la estatura)</div>
+                        </li>
+                    </ul>
+                    <br>
+                    <div class="ex-basic-1 pt-5 pb-5">
+                        <div class="container text-center">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <img class="img-fluid mt-5 mb-3"
+                                        src="https://elordenmundial.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2021/10/Mapa-hambre-mundo.png.webp"
+                                        alt="alternative">
+                                </div> 'end of col '
+                            </div>  'end of row '
+                        </div> 'end of container '
+                    </div>  'end of ex-basic-1 '
+
+                    <h2 class="my-3">Como lo vivimos en Argentina</h2>
+                    <p class="py-2">Es una problemática que crece exponencialmente. Cuando hablamos de hambre nos
+                        referimos al estado general de carencia de alimentos e inseguridad ali­mentaria que afecta a
+                        todos los grupos de población. Cabe destacar que hay muchas personas que, si bien no padecen
+                        hambre, en el sentido de que padezcan un malestar físico ocasionado por una carencia grave de
+                        energía alimentaria, pueden, no obstante, encontrarse en situación de inseguridad alimentaria.
+                        Tienen acceso a los alimentos que satisfacen sus necesidades energéticas, pero no la seguridad
+                        de que el acceso sea duradero, y pueden verse obligados a reducir la calidad o la cantidad de
+                        los alimentos que consumen para sobrevivir. Este nivel moderado en la gravedad de la inseguridad
+                        alimentaria puede contribuir a diversas formas de malnutrición y tiene consecuencias graves para
+                        la salud y el bienestar.</p><br>
+                    <ul class="list-unstyled li-space-lg mb-5">
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>El 15,5% de los menores de 18 años</strong> sufrieron
+                                inseguridad alimentaria severa en el último año.</div>
+                        </li>
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>2 millones de chicos/as</strong> sufrieron hambre por falta
+                                de recursos.</div>
+                        </li>
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>4,5 millones de niños y adolescentes de entre 0 y 17
+                                    años</strong> que viven en hogares en los cuales, por problemas económicos, se
+                                redujo la cantidad de alimentos consumidos. <br>la población más afectada por sufrir
+                                episodios de hambre es la de quienes tienen entre 13 y 17 años: la inseguridad
+                                alimentaria severa llega en ese caso al 18,9%, mientras que en 2019 era de 14,4%. El
+                                índice es de 16,7% entre los chicos de 5 a 12 años (era de 15,1% el año pasado), y de
+                                9,5% en el grupo de niños de 0 a 4 años (en este caso hubo una disminución respecto del
+                                11,9% de 2019). Si se mira en conjunto a la población de 0 a 17 años, el indicador es de
+                                15,5%, mientras que el año pasado había sido de 14%.</div>
+                        </li>
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>8,6% de la población de todas las edades</strong> padece
+                                inseguridad alimentaria severa (que es sufrida por quienes en un período de 12 meses
+                                tuvieron situaciones en las que no pudieron satisfacer sus requerimientos de alimentos)
+                            </div>
+                        </li>
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>Inseguridad alimentaria severa</strong> <br>– Afecta al 7%
+                                (1 de cada 14) de los hogares. <br>– Afecta a 3 millones de personas.</div>
+                        </li>
+                        <li class="d-flex py-2">
+                            <i class="fas fa-square"></i>
+                            <div class="flex-grow-1"><strong>Inseguridad alimentaria moderada:</strong> <br>– Afecta al
+                                19% (casi 1 de cada 5) de los hogares.<br>– Afecta a 7,8 millones de personas.</div>
+                        </li>
+                    </ul>
+                    <p>Estas cifras claramente nos demuestran que poner fin al Hambre, lograr la Seguridad Alimentaria y
+                        la mejora de la Nutrición, y promover la Agricultura Sostenible es uno de los oobjetivos mas
+                        urgentes.</p><br>
+                </div>  'end of col '
+            </div>  'end of row'
+        </div>' end of container '
+    </div><br>  'end of ex-basic-1 '
+    ' end of basic '
+
+
+     'Cards '
+    <div class="ex-cards-1 pt-3 pb-3 ">
+        <div class="container">
+            <div class="row col-xl-10 offset-xl-1">
+                 'Card' 
+                <h4 class="py-3">Para ello deberá</h4>
+                <div class="card col-lg-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex">
+                            <i class="fa fa-asterisk" aria-hidden="true"></i>
+                            <div class="flex-grow-1">
+                                <p>Aumentar las inversiones, incluso mediante una mayor cooperación internacional, en la
+                                    infraestructura rural, la investigación agrícola y los servicios de extensión, el
+                                    desarrollo tecnológico y los bancos de genes de plantas y ganado a fin de mejorar la
+                                    capacidad de producción agrícola en los países en desarrollo, en particular en los
+                                    países menos adelantados.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  'end of card' 
+                 'end of card'
+
+                 'Card'
+                <div class="card col-lg-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex">
+                            <i class="fa fa-asterisk" aria-hidden="true"></i>
+                            <div class="flex-grow-1">
+                                <p>Corregir y prevenir las restricciones y distorsiones comerciales en los mercados
+                                    agropecuarios mundiales, entre otras cosas mediante la eliminación paralela de todas
+                                    las formas de subvenciones a las exportaciones agrícolas y todas las medidas de
+                                    exportación con efectos equivalentes, de conformidad con el mandato de la Ronda de
+                                    Doha para el Desarrollo.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card col-lg-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex">
+                            <i class="fa fa-asterisk" aria-hidden="true"></i>
+                            <div class="flex-grow-1">
+                                <p> Adoptar medidas para asegurar el buen funcionamiento de los mercados de productos básicos
+                                    alimentarios y sus derivados y facilitar el acceso oportuno a información sobre los mercados, en
+                                    particular sobre las reservas de alimentos, a fin de ayudar a limitar la extrema volatilidad de
+                                    los precios de los alimentos.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div> 'end of card '
+            </div>
+        </div>
+    </div> 'end of card '
+
+   '  Card'
+ <br>
+
+
+    <div class="ex-cards-1 pt-3 pb-3 ">
+        <div class="container">
+            <div class="row col-xl-10 offset-xl-1">
+                 'Card '
+                <h4 class="py-3">Metas para 2030</h4>
+                <div class="card col-lg-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex">
+                            <i class="fa fa-asterisk" aria-hidden="true"></i>
+                            <div class="flex-grow-1">
+                                <p>Para 2030, poner fin al hambre y asegurar el acceso de todas las personas, en
+                                    particular los pobres y las personas en situaciones vulnerables, incluidos los
+                                    lactantes, a una alimentación sana, nutritiva y suficiente durante todo el año.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  'end of card '
+                 'end of card '
+
+                ' Card '
+                <div class="card col-lg-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex">
+                            <i class="fa fa-asterisk" aria-hidden="true"></i>
+                            <div class="flex-grow-1">
+                                <p>Para 2030, poner fin a todas las formas de malnutrición, incluso logrando, a más
+                                    tardar en 2025, las metas convenidas internacionalmente sobre el retraso del
+                                    crecimiento y la emaciación de los niños menores de 5 años, y abordar las
+                                    necesidades de nutrición de las adolescentes, las mujeres embarazadas y lactantes y
+                                    las personas de edad.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  'end of card '
+                 'end of card '
+
+                ' Card '
+                <div class="card col-lg-4">
+                    <ul class="list-unstyled">
+                        <li class="d-flex">
+                            <i class="fa fa-asterisk" aria-hidden="true"></i>
+                            <div class="flex-grow-1">
+                                <p>Para 2030, duplicar la productividad agrícola y los ingresos de los productores de
+                                    alimentos en pequeña escala, en particular las mujeres, los pueblos indígenas, los
+                                    agricultores familiares, los pastores y los pescadores, entre otras cosas mediante
+                                    un acceso seguro y equitativo a las tierras, a otros recursos de producción e
+                                    insumos, conocimientos, servicios financieros, mercados y oportunidades para la
+                                    generación de valor añadido y empleos no agrícolas.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card col-lg-4 mt-5">
+                    <ul class="list-unstyled">
+                        <li class="d-flex">
+                            <i class="fa fa-asterisk" aria-hidden="true"></i>
+                            <div class="flex-grow-1">
+                                <p>Para 2030, asegurar la sostenibilidad de los sistemas de producción de alimentos y
+                                    aplicar prácticas agrícolas resilientes que aumenten la productividad y la
+                                    producción, contribuyan al mantenimiento de los ecosistemas, fortalezcan la
+                                    capacidad de adaptación al cambio climático, los fenómenos meteorológicos extremos,
+                                    las sequías, las inundaciones y otros desastres, y mejoren progresivamente la
+                                    calidad del suelo y la tierra.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="card col-lg-4 mt-5">
+                    <ul class="list-unstyled">
+                        <li class="d-flex">
+                            <i class="fa fa-asterisk" aria-hidden="true"></i>
+                            <div class="flex-grow-1">
+                                <p>Para 2020, mantener la diversidad genética de las semillas, las plantas cultivadas y
+                                    los animales de granja y domesticados y sus especies silvestres conexas, entre otras
+                                    cosas mediante una buena gestión y diversificación de los bancos de semillas y
+                                    plantas a nivel nacional, regional e internacional, y promover el acceso a los
+                                    beneficios que se deriven de la utilización de los recursos genéticos y los
+                                    conocimientos tradicionales y su distribución justa y equitativa, como se ha
+                                    convenido internacionalmente.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div> ' end of row '
+        </div> ' end of container '
+    </div><br><br>  'end of ex-cards-1' 
+    ' end of cards '
+-->
+
+
+
+<!--
+    <section style="background-color: #eee;">
+        <div class="container my-5 py-5">
+            {%with comentarios.count as total_comments%}
+            {% if total_comments != 0 %}
+            <h2>
+                {{total_comments}} comentario{{ total_comments|pluralize }}
+            </h2>
+            {%else%}
+            <h2>
+                No hay comentarios. ¡Publica el primero!
+            </h2>
+            {% endif %}
+            {%endwith%}
+            {%for comentario in comentarios%}
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-12 col-lg-10 col-xl-8">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="d-flex flex-start align-items-center">
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).jpg" alt="avatar"
+                                    width="60" height="60" />
+                                <div>
+                                    <h6 class="fw-bold text-primary mb-1">{{ comentario.autor }}</h6>
+                                    <p class="text-muted small mb-0">
+                                        Publicado el - {{comentario.fecha}}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <p class="mt-3 mb-4 pb-2">
+                                {{comentario.cuerpo|linebreaks}}
+                            </p>
+
+                            <div class="small d-flex justify-content-start">
+                                <a href="#!" class="d-flex align-items-center me-3">
+                                    <i class="far fa-thumbs-up me-2"></i>
+                                    <p class="mb-0">Like</p>
+                                </a>
+                                <a href="#!" class="d-flex align-items-center me-3">
+                                    <i class="far fa-comment-dots me-2"></i>
+                                    <p class="mb-0">Comment</p>
+                                </a>
+                                <a href="#!" class="d-flex align-items-center me-3">
+                                    <i class="fas fa-share me-2"></i>
+                                    <p class="mb-0">Share</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="card-footer py-3 border-0" style="background-color: #f8f9fa;">
+                            <div class="d-flex flex-start w-100">
+                                <img class="rounded-circle shadow-1-strong me-3"
+                                    src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(19).jpg" alt="avatar"
+                                    width="40" height="40" />
+                                <div class="form-outline w-100">
+                                    <textarea class="form-control" id="textAreaExample" rows="4"
+                                        style="background: #fff;"></textarea>
+                                    <label class="form-label" for="textAreaExample">Message</label>
+                                </div>
+                            </div>
+                            <div class="float-end mt-2 pt-1">
+                                <button type="button" class="btn btn-tertiary mr-4">Comentar</button>
+                                <button type="button" class="btn btn-tertiary ml-2">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {%empty%}
+            {%endfor%}
+        </div>
+    </section>
+-->
+    <br>
+
+    <div class="col-md-8">
+
+        {% if user.is_authenticated %}
+        <form id="FormaComentario" method="post">
+            {{forma_comentario.as_p}}
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Publicar</button>
+        </form>
+        {% else %}
+        <div class="container text-center m-3">
+            <div class="align-items-center">
+                <h5> Para participar es necesario loguearse </h5>
+                <a class="btn btn-primary" aria-current="page" href="{% url 'login' %}">Iniciar Sesión</a>
+                <a class="btn btn-primary" aria-current="page" href="{% url 'registro' %}">Registrarse</a>
+            </div>
+        </div>
+        {% endif %}
+        <!-- FIN COMENTARIOS -->
+    </div>
+    </div>
+    <br>
     {%endblock%}
+
 </body>
