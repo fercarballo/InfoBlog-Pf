@@ -13,6 +13,7 @@ Este proyecto ha sido un esfuerzo en conjunto con varias personas, por lo que si
  - [Edithel]  
  - [MauriMS]  
  - [HugoJCamarichi]  
+ - [Jose34345]
 ___
 ## _Primeros pasos_
 
@@ -125,3 +126,4 @@ Si nos vamos a esa dirección en nuestro navegador, deberíamos ver la página f
 [Edithel]: <https://github.com/edithel>
 [MauriMS]: <https://github.com/MauriMS>
 [HugoJCamarichi]: <https://github.com/HugoJCamarichi>
+[Jose34345]: <https://github.com/Jose34345>
