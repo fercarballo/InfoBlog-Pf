@@ -6,13 +6,13 @@ Este es el repositorio público del Grupo 3, de la Comisión 3.
 
 Este proyecto ha sido un esfuerzo en conjunto con varias personas, por lo que si les gustó o les pareció útil el proyecto, no olviden pasarse por los repositorios del resto del grupo:
 
-[fercarballo]
-[Ferclemens]
-[Lucaszanazzo]
-[CarlaGuastalla]
-[Edithel]
-[MauriMS]
-[HugoJCamarichi]
+[fercarballo]  
+[Ferclemens]  
+[Lucaszanazzo]  
+[CarlaGuastalla]  
+[Edithel]  
+[MauriMS]  
+[HugoJCamarichi]  
 ___
 ## _Primeros pasos_
 
