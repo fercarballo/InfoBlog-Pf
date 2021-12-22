@@ -3,6 +3,16 @@ ___
 ## Introducción
 
 Este es el repositorio público del Grupo 3, de la Comisión 3.
+
+Este proyecto ha sido un esfuerzo en conjunto con varias personas, por lo que si les gustó o les pareció útil el proyecto, no olviden pasarse por los repositorios del resto del grupo:
+
+[fercarballo]
+[Ferclemens]
+[Lucaszanazzo]
+[CarlaGuastalla]
+[Edithel]
+[MauriMS]
+[HugoJCamarichi]
 ___
 ## _Primeros pasos_
 
@@ -108,4 +118,10 @@ Si nos vamos a esa dirección en nuestro navegador, deberíamos ver la página f
 [//]: #
 [venv]: <https://docs.python.org/es/3/library/venv.html>
 [SQLite]: <https://www.sqlite.org/about.html>
-
+[fercarballo]: <https://github.com/fercarballo>
+[Ferclemens]: <https://github.com/Ferclemens>
+[Lucaszanazzo]: <https://github.com/Lucaszanazzo>
+[CarlaGuastalla]: <https://github.com/CarlaGuastalla>
+[Edithel]: <https://github.com/edithel>
+[MauriMS]: <https://github.com/MauriMS>
+[HugoJCamarichi]: <https://github.com/HugoJCamarichi>
